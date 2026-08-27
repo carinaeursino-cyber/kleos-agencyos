@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-gold: #C5A059;
+  --color-gold-hover: #E5C383;
+  --color-obsidian: #050505;
+  --color-obsidian-card: #0B0B0C;
+  --font-serif: "Playfair Display", "Georgia", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* ── Base ── */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: #050505;
+  color: #F5F5F5;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Smooth scroll for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Subtle background grain simulation ── */
+.editorial-grain {
+  position: relative;
+}
+.editorial-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  z-index: 99;
+  background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+}
+
+/* ── Mobile: reduced opacity for performance ── */
+@media (max-width: 767px) {
+  .editorial-grain::before {
+    opacity: 0.04;
+  }
+}
+
+/* ── Mobile scrollbar styling ── */
+@media (max-width: 767px) {
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050505;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(197, 160, 89, 0.15);
+    border-radius: 4px;
+  }
+}
+
+/* ── Selection ── */
+::selection {
+  background-color: rgba(197, 160, 89, 0.3);
+  color: white;
+}
+
+/* ── Safe area for notched phones ── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
