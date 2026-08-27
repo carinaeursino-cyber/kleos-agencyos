@@ -11,6 +11,7 @@ interface StatementSectionProps {
   eyebrow?: string;
   bottomLeft?: string;
   bottomRight?: string;
+  compactMobile?: boolean;
 }
 
 export default function StatementSection({
@@ -22,6 +23,7 @@ export default function StatementSection({
   eyebrow,
   bottomLeft,
   bottomRight,
+  compactMobile = false,
 }: StatementSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -266,7 +268,7 @@ export default function StatementSection({
           <div className="flex-1 flex items-center justify-center py-16 md:py-20 lg:py-24">
             <h2
               ref={textRef}
-              className="text-[4rem] md:text-5xl lg:text-7xl xl:text-8xl font-serif tracking-tight leading-[1.05] font-light w-full"
+              className={`${compactMobile ? "text-[2.25rem] sm:text-4xl" : "text-[4rem]"} md:text-5xl lg:text-7xl xl:text-8xl font-serif tracking-tight leading-[1.05] font-light w-full`}
             >
               <div className="flex flex-col items-center justify-center py-4 max-w-5xl mx-auto leading-[1.1]">
                 {renderDeblurText()}

@@ -52,6 +52,7 @@ export default function ValueSection() {
         variant="deblur"
         eyebrow="La solución"
         bottomLeft="KLEOS CONSULTORÍA"
+        compactMobile
         text="Agency OS reemplaza el caos por un sistema."
         highlight="Procesos claros. Responsabilidades definidas. Todo en un solo lugar."
       />
