@@ -136,7 +136,7 @@ export default function AosSection() {
         </div>
 
         {/* Capas del sistema */}
-        <div className="aos-layers-grid grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 md:mb-24">
+        <div className="aos-layers-grid grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-24 md:mb-36">
           {aosLayers.map((layer) => {
             const LayerIcon = layerIcons[layer.id] ?? Building2;
             return (
@@ -171,7 +171,7 @@ export default function AosSection() {
         </div>
 
         {/* Dashboards de control */}
-        <div className="mb-16 md:mb-24">
+        <div className="mb-16 md:mb-24 border-t border-white/10 pt-16 md:pt-24">
           <div className="aos-header max-w-3xl mb-8 md:mb-12">
             <p className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] text-gold uppercase mb-4 select-none">
               Dashboards de control
