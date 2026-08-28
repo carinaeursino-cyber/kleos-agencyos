@@ -72,12 +72,10 @@ export default function ValueSection() {
               <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-48 h-48 bg-gold/[0.04] rounded-full blur-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
               <div className="relative">
-                <div className="flex items-baseline justify-between border-b border-white/5 pb-4 mb-5 select-none">
-                  <span className="font-mono text-[10px] text-gold font-bold">
-                    [{pillar.id} / 03]
-                  </span>
-                </div>
-
+                {/* Se eliminó la cabecera "[01 / 03]" con su filete divisorio.
+                    Las tarjetas quedan con el título como único elemento
+                    destacado. key={pillar.id} se conserva más arriba: el id ya
+                    no se muestra, pero sigue identificando a cada tarjeta. */}
                 <h3 className="font-serif text-2xl md:text-3xl text-neutral-100 font-light tracking-tight mb-3 group-hover:text-gold transition-colors duration-500 select-text">
                   {pillar.title}
                 </h3>

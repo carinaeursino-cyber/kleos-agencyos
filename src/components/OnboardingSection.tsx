@@ -94,20 +94,12 @@ export default function OnboardingSection() {
                 </span>
               </div>
 
-              <h3 className="font-serif text-xl md:text-2xl font-light tracking-tight text-neutral-100 group-hover:text-gold transition-colors duration-500 mb-5 select-text">
+              {/* Se quitó la lista de bullets. El h3 era el título con mb-5
+                  separándolo de esos bullets; sin lista, ese margen quedaba
+                  como hueco suelto al pie de la tarjeta, así que se retira. */}
+              <h3 className="font-serif text-xl md:text-2xl font-light tracking-tight text-neutral-100 group-hover:text-gold transition-colors duration-500 select-text">
                 {day.title}
               </h3>
-
-              <ul className="space-y-2.5 flex-1">
-                {day.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2.5">
-                    <span className="w-1 h-1 rounded-full bg-gold/70 mt-[7px] shrink-0" />
-                    <span className="text-neutral-400 group-hover:text-neutral-300 text-[13px] font-light leading-snug transition-colors duration-300 select-text">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
             </div>
           ))}
         </div>

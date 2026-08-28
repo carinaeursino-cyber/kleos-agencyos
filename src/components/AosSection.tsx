@@ -3,6 +3,39 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { aosLayers, controlDashboards } from "../data";
 
+// ── Capturas de los dashboards ──
+// Mismo mecanismo que AboutSection usa con la foto de Carina: se toman los
+// archivos de src/assets/images/ y se emparejan por substring del nombre.
+// Si el PNG todavía no está, la tarjeta se renderiza sin imagen y el build
+// NO se rompe. Soltar el archivo en esa carpeta alcanza para que aparezca.
+const dashboardImages = import.meta.glob("../assets/images/*.{png,jpg,jpeg,webp}", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+
+// Captura y alt por tarjeta, emparejados por id de data.ts.
+// Vive acá y no en data.ts por el mismo motivo que la foto de Carina vive en
+// AboutSection: es cableado de un asset, no copy editable.
+const dashboardCaptures: Record<string, { file: string; alt: string }> = {
+  "01": {
+    file: "salud_del_proyecto",
+    alt: "Semáforo de Salud de Proyectos: gráfico de anillo con el estado de cada proyecto.",
+  },
+  "02": {
+    file: "volumen_activo_por_persona",
+    alt: "Volumen Activo por Persona: gráfico de barras con la carga de trabajo de cada integrante.",
+  },
+};
+
+const imageFor = (id: string) => {
+  const want = dashboardCaptures[id]?.file.toLowerCase();
+  if (!want) return undefined;
+  const hit = Object.entries(dashboardImages).find(([path]) =>
+    path.toLowerCase().includes(want)
+  );
+  return hit ? { src: hit[1], alt: dashboardCaptures[id].alt } : undefined;
+};
+
 // ─────────────────────────────────────────────────────────────────
 // AosSection — Agency Operating System
 // La arquitectura completa: capas, dashboards y onboarding.
@@ -111,16 +144,8 @@ export default function AosSection() {
                 {layer.description}
               </p>
 
-              <ul className="mt-5 space-y-2 flex-1">
-                {layer.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2.5">
-                    <span className="w-1 h-1 rounded-full bg-gold/70 mt-[7px] shrink-0" />
-                    <span className="text-neutral-400 text-[13px] font-light leading-snug group-hover:text-neutral-300 transition-colors duration-300 select-text">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              {/* Se quitó la lista de bullets; la tarjeta queda con
+                  título + descripción corta. */}
             </div>
           ))}
         </div>
@@ -138,7 +163,9 @@ export default function AosSection() {
           </div>
 
           <div className="aos-dashboards-grid grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            {controlDashboards.map((dash) => (
+            {controlDashboards.map((dash) => {
+              const capture = imageFor(dash.id);
+              return (
               <div
                 key={dash.id}
                 className="aos-dashboard-card relative bg-[#0B0B0C] border border-white/10 hover:border-gold/30 rounded-2xl p-6 md:p-9 transition-colors duration-300"
@@ -158,6 +185,18 @@ export default function AosSection() {
                   {dash.title}
                 </h4>
 
+                {capture && (
+                  <figure className="mb-5">
+                    <img
+                      src={capture.src}
+                      alt={capture.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-auto w-full rounded-lg border border-white/10"
+                    />
+                  </figure>
+                )}
+
                 <ul className="space-y-2.5">
                   {dash.metrics.map((m, i) => (
                     <li
@@ -172,7 +211,8 @@ export default function AosSection() {
                   ))}
                 </ul>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
