@@ -25,7 +25,10 @@ import { fitNo, fitYes } from "../data";
 const CTA_LABEL = "Agenda tu Auditoría Operativa de 15 min";
 const HEADER_LABEL = "Agendar auditoría";
 
-const CAL_URL = "https://cal.com/carina-ursino/sesion-diagnostico";
+// El enlace de agendamiento vive en src/lib/booking.ts, que es el mismo que
+// usa el CTA del header del sitio. Se lo importa como CAL_URL para no tocar los
+// tres botones de esta pagina.
+import { BOOKING_URL as CAL_URL } from "../lib/booking";
 
 // ── El embed ──
 // Mientras sea null se pinta el placeholder: no hay iframe activo en la

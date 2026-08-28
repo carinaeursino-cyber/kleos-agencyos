@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { BOOKING_URL } from "../lib/booking";
 
 // ─────────────────────────────────────────────────────────────────
 // KleosMenu — Morphing Button → Fullscreen Overlay
@@ -118,8 +119,24 @@ export default function KleosMenu({ visible, onNavigate }: KleosMenuProps) {
                 sobre texto. Se oculta con el overlay abierto: este contenedor
                 es z-[100], queda por encima del menu (z-[99]), y el overlay ya
                 tiene su propio enlace a Contacto. */}
-            <Link
-              to="/contacto"
+                        {/* ── CTA de conversion, arriba a la derecha ──
+                Enlaza directo a la agenda (BOOKING_URL, en
+                src/lib/booking.ts: el mismo enlace de los botones de /vsl),
+                no a /contacto: quien hace clic en "Agendar diagnostico" en
+                el header ya decidio agendar, y pasar por el formulario lo
+                enfria. Contacto sigue accesible desde el overlay del menu.
+                Ghost con borde dorado fino: mismo tratamiento del boton del
+                footer (border-gold/30 + text-gold + hover:bg-gold/5) escalado
+                a la barra. Va suelto en el extremo opuesto al menu, asi no
+                compite con el logo lambda del rail izquierdo en desktop ni con
+                el trigger. El fondo + blur es porque la barra es fija y pasa
+                sobre texto. Se oculta con el overlay abierto: este contenedor
+                es z-[100], queda por encima del menu (z-[99]), y el overlay ya
+                tiene su propio enlace a Contacto. */}
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`cursor-hover group pointer-events-auto inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-gold/30 bg-[#050505]/70 px-4 py-2 text-gold backdrop-blur-md transition-all duration-300 hover:border-gold hover:bg-gold/5 ${
                 isOpen ? "opacity-0 pointer-events-none" : "opacity-100"
               }`}
@@ -135,7 +152,7 @@ export default function KleosMenu({ visible, onNavigate }: KleosMenuProps) {
               >
                 <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </Link>
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
