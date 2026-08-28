@@ -48,7 +48,7 @@ const carinaImages = import.meta.glob("../assets/images/*.{png,jpg,jpeg}", {
 }) as Record<string, string>;
 
 const carinaPhoto = Object.entries(carinaImages).find(([path]) =>
-  path.toLowerCase().includes("foto_carina_hero")
+  path.toLowerCase().includes("carina")
 )?.[1];
 
 // Los 6 enfoques de esta landing NO son los del home (aboutFocus en data.ts):
