@@ -139,7 +139,7 @@ export default function ProblemSection() {
             El axioma "Crecer significa más caos, no más orden." se eliminó:
             duplicaba en significado a la tarjeta [08], que ahora cierra el tema. */}
         <div className="problem-axioms mt-12 md:mt-16 max-w-2xl mx-auto text-center space-y-3 md:space-y-4">
-          <p className="font-serif italic text-gold text-base md:text-lg font-normal leading-snug select-text">
+          <p className="font-serif text-gold text-base md:text-lg font-normal leading-snug select-text">
             “Tranquilo: el desorden es solo un síntoma natural de tu éxito. Tu agencia creció más rápido que tus procesos. Ahora toca poner la estructura para aguantar el siguiente nivel.”
           </p>
         </div>
