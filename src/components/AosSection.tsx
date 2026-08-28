@@ -1,12 +1,29 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Building2, Crown, Handshake, LayoutDashboard, Settings } from "lucide-react";
 import { aosLayers, controlDashboards } from "../data";
+
+// Íconos de marca por tarjeta, emparejados por id de data.ts. Línea fina
+// (strokeWidth 1.25) y el mismo text-gold sólido que tenían los números:
+// cambia el marcador, no la paleta. Se evitó PieChart en "Dashboard ejecutivo"
+// porque esa tarjeta ya muestra un gráfico de anillo y el ícono duplicaría
+// exactamente el mismo dibujo.
+const layerIcons = {
+  "01": Building2, // Company HQ — la dirección del negocio
+  "02": Settings, // Internal Operations — engranaje / gestión
+  "03": Handshake, // Client Operations — relación con el cliente
+};
+
+const dashboardIcons = {
+  "01": Crown, // Dashboard ejecutivo — vista de dirección
+  "02": LayoutDashboard, // Dashboard operativo — panel de control
+};
 
 // ── Capturas de los dashboards ──
 // Mismo mecanismo que AboutSection usa con la foto de Carina: se toman los
 // archivos de src/assets/images/ y se emparejan por substring del nombre.
-// Si el PNG todavía no está, la tarjeta se renderiza sin imagen y el build
+// Si el PNG todavia no esta, la tarjeta se renderiza sin imagen y el build
 // NO se rompe. Soltar el archivo en esa carpeta alcanza para que aparezca.
 const dashboardImages = import.meta.glob("../assets/images/*.{png,jpg,jpeg,webp}", {
   eager: true,
@@ -14,11 +31,11 @@ const dashboardImages = import.meta.glob("../assets/images/*.{png,jpg,jpeg,webp}
 }) as Record<string, string>;
 
 // Captura y alt por tarjeta, emparejados por id de data.ts.
-// Vive acá y no en data.ts por el mismo motivo que la foto de Carina vive en
+// Vive aca y no en data.ts por el mismo motivo que la foto de Carina vive en
 // AboutSection: es cableado de un asset, no copy editable.
 const dashboardCaptures: Record<string, { file: string; alt: string }> = {
   "01": {
-    file: "salud_de_proyecto",
+    file: "salud_del_proyecto",
     alt: "Semáforo de Salud de Proyectos: gráfico de anillo con el estado de cada proyecto.",
   },
   "02": {
@@ -120,7 +137,9 @@ export default function AosSection() {
 
         {/* Capas del sistema */}
         <div className="aos-layers-grid grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 md:mb-24">
-          {aosLayers.map((layer) => (
+          {aosLayers.map((layer) => {
+            const LayerIcon = layerIcons[layer.id] ?? Building2;
+            return (
             <div
               key={layer.id}
               className="aos-layer-card group relative bg-[#0B0B0C] border border-white/10 hover:border-gold/30 rounded-2xl p-6 md:p-8 transition-colors duration-300 flex flex-col"
@@ -128,10 +147,10 @@ export default function AosSection() {
               {/* Acento superior */}
               <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-              <div className="flex items-baseline justify-between border-b border-white/5 pb-4 mb-5 select-none">
-                <span className="font-mono text-[10px] text-gold font-bold">
-                  [{layer.id} / 03]
-                </span>
+              {/* items-baseline -> items-center: un SVG no tiene línea base de
+                  texto, y con baseline el ícono caía 2-3 px contra el label. */}
+              <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-5 select-none">
+                <LayerIcon className="h-4 w-4 shrink-0 text-gold" strokeWidth={1.25} aria-hidden="true" />
                 <span className="font-mono text-[8px] tracking-widest text-neutral-600 uppercase">
                   Layer
                 </span>
@@ -144,10 +163,11 @@ export default function AosSection() {
                 {layer.description}
               </p>
 
-              {/* Se quitó la lista de bullets; la tarjeta queda con
-                  título + descripción corta. */}
+              {/* Se quito la lista de bullets; la tarjeta queda con
+                  titulo + descripcion corta. */}
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Dashboards de control */}
@@ -165,15 +185,14 @@ export default function AosSection() {
           <div className="aos-dashboards-grid grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {controlDashboards.map((dash) => {
               const capture = imageFor(dash.id);
+              const DashIcon = dashboardIcons[dash.id] ?? LayoutDashboard;
               return (
               <div
                 key={dash.id}
                 className="aos-dashboard-card relative bg-[#0B0B0C] border border-white/10 hover:border-gold/30 rounded-2xl p-6 md:p-9 transition-colors duration-300"
               >
                 <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-6 select-none">
-                  <span className="font-mono text-[10px] text-gold font-bold">
-                    [{dash.id} / 02]
-                  </span>
+                  <DashIcon className="h-4 w-4 shrink-0 text-gold" strokeWidth={1.25} aria-hidden="true" />
                   <span className="flex gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-gold/60" />
                     <span className="w-1.5 h-1.5 rounded-full bg-gold/30" />

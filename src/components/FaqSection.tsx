@@ -75,9 +75,6 @@ export default function FaqSection() {
                   className="cursor-hover group w-full flex items-center justify-between gap-6 py-5 md:py-6 text-left"
                 >
                   <span className="flex items-baseline gap-4 md:gap-6">
-                    <span className="font-mono text-[10px] text-gold/50 group-hover:text-gold transition-colors duration-300 shrink-0 select-none">
-                      [{faq.id}]
-                    </span>
                     <span
                       className={`font-serif font-light text-lg md:text-2xl leading-snug transition-colors duration-300 select-text ${
                         isOpen ? "text-gold" : "text-neutral-200 group-hover:text-white"
@@ -109,7 +106,7 @@ export default function FaqSection() {
                       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="pb-6 pl-10 md:pl-14 text-neutral-400 font-light text-sm md:text-base leading-relaxed max-w-2xl select-text">
+                      <p className="pb-6 text-neutral-400 font-light text-sm md:text-base leading-relaxed max-w-2xl select-text">
                         {faq.answer}
                       </p>
                     </motion.div>

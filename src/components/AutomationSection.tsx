@@ -84,9 +84,14 @@ export default function AutomationSection() {
               key={a.id}
               className="autom-card group relative bg-[#0B0B0C] border border-white/10 hover:border-gold/30 rounded-xl px-5 py-4 flex items-start gap-3 transition-colors duration-300"
             >
-              <span className="font-mono text-[10px] text-gold/60 group-hover:text-gold transition-colors duration-300 mt-[2px] shrink-0">
-                [{a.id}]
-              </span>
+              {/* Marcador minimo en lugar del numero: una linea dorada corta.
+                  mt-[9px] = centro vertical de una linea de texto de 13px con
+                  leading-snug (~18px), para que el guion quede a media altura.
+                  gap-3 de la tarjeta sigue intacto, asi que el texto no se mueve. */}
+              <span
+                aria-hidden="true"
+                className="mt-[9px] h-px w-3 shrink-0 bg-gold/50 transition-colors duration-300 group-hover:bg-gold"
+              />
               <span className="text-neutral-400 group-hover:text-neutral-200 text-[13px] md:text-sm font-light leading-snug transition-colors duration-300 select-text">
                 {a.text}
               </span>

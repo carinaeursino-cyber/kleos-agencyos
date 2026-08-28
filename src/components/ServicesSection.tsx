@@ -1,7 +1,17 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { DraftingCompass, GraduationCap, Search, SquareKanban } from "lucide-react";
 import { consultingServices } from "../data";
+
+// Un ícono por frente de trabajo, emparejado por id. Mismo text-gold que
+// tenía "[01 / 04]".
+const serviceIcons = {
+  "01": Search, // Diagnóstico operativo
+  "02": DraftingCompass, // Diseño del sistema (compás de trazado / blueprint)
+  "03": SquareKanban, // Implementación en ClickUp (tablero)
+  "04": GraduationCap, // Adopción del equipo (capacitación)
+};
 
 // ─────────────────────────────────────────────────────────────────
 // ServicesSection — Implementación
@@ -210,7 +220,9 @@ export default function ServicesSection() {
         </div>
 
         <div className="relative flex-1 w-full max-w-5xl mx-auto flex items-center justify-center h-[52vh] sm:h-[56vh] my-2 sm:my-4 px-4 sm:px-6 md:px-12">
-          {consultingServices.map((service, idx) => (
+          {consultingServices.map((service, idx) => {
+            const ServiceIcon = serviceIcons[service.id] ?? Search;
+            return (
             <div
               key={service.id}
               className="service-stack-card absolute w-[calc(100%-16px)] sm:w-full max-w-4xl h-[52vh] sm:h-[56vh] min-h-[360px] sm:min-h-[380px] max-h-[470px] sm:max-h-[490px] bg-[#0B0B0C] border border-gold/15 hover:border-gold/30 rounded-xl sm:rounded-2xl flex flex-col justify-between p-5 sm:p-8 md:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.85)] group transition-colors duration-300 will-change-transform origin-center"
@@ -222,9 +234,11 @@ export default function ServicesSection() {
 
               {/* Header */}
               <div className="flex justify-between items-center border-b border-white/5 pb-2 sm:pb-3 md:pb-4 select-none shrink-0">
-                <span className="font-mono text-[10px] sm:text-xs text-gold font-bold">
-                  [{service.id} / 04]
-                </span>
+                <ServiceIcon
+                  className="h-4 w-4 shrink-0 text-gold sm:h-[18px] sm:w-[18px]"
+                  strokeWidth={1.25}
+                  aria-hidden="true"
+                />
                 <span className="font-mono text-[7px] sm:text-[8px] md:text-[9px] tracking-widest text-neutral-600 uppercase hidden sm:block">
                   Frente de trabajo
                 </span>
@@ -262,7 +276,8 @@ export default function ServicesSection() {
                 </p>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Rail inferior */}
