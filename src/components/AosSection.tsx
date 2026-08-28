@@ -35,7 +35,7 @@ const dashboardImages = import.meta.glob("../assets/images/*.{png,jpg,jpeg,webp}
 // AboutSection: es cableado de un asset, no copy editable.
 const dashboardCaptures: Record<string, { file: string; alt: string }> = {
   "01": {
-    file: "salud_del_proyecto",
+    file: "salud_de_proyecto",
     alt: "Semáforo de Salud de Proyectos: gráfico de anillo con el estado de cada proyecto.",
   },
   "02": {
