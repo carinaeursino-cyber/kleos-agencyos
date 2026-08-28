@@ -60,7 +60,15 @@ export default function KleosMenu({ visible, onNavigate }: KleosMenuProps) {
       <AnimatePresence>
         {visible && (
           <motion.div
-            className="fixed top-0 right-0 left-0 z-[100] flex items-center justify-between p-6 md:p-8 pointer-events-none"
+            /* lg:pr-32: el riel derecho mide w-24 (96px) y su border-l es la
+               linea vertical que el CTA pisaba. Con padding de 32px el boton
+               terminaba a 32px del borde, o sea ENCIMA de la linea (que esta a
+               96px). A partir de lg se pasa a 128px = 96 + 32: el boton queda
+               adentro de la reticula, con 32px de aire a la izquierda de la
+               guia, que es el mismo valor de p-8 del resto de la barra.
+               Solo lg+: por debajo de ese breakpoint los rieles son
+               'hidden lg:flex' y no hay linea que esquivar. */
+            className="fixed top-0 right-0 left-0 z-[100] flex items-center justify-between p-6 md:p-8 lg:pr-32 pointer-events-none"
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
