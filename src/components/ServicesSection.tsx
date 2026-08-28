@@ -292,7 +292,8 @@ export default function ServicesSection() {
       </div>
 
       {/* Refuerzo — frase suelta reciclada del diferenciador */}
-      <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 lg:px-24 pt-10 md:pt-14 pb-2 text-center">
+-      <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 lg:px-24 pt-10 md:pt-14 pb-2 text-center">
++      <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 lg:px-24 pt-6 md:pt-8 pb-12 md:pb-16 text-center">
         <p className="font-serif italic text-gold text-lg md:text-2xl font-normal leading-snug select-text">
           No empezamos por la herramienta. Primero la operación. Después la herramienta.
         </p>
