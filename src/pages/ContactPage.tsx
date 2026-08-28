@@ -193,7 +193,7 @@ export default function ContactPage() {
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Cuéntanos sobre tu agencia: servicios, tamaño del equipo, cantidad de clientes y principales fricciones operativas..."
+                  placeholder="Cuéntame brevemente: ¿cuántas personas son en el equipo, qué servicios venden y qué es lo que hoy más te traba en la operación diaria?"
                   rows={5}
                   className="bg-transparent border-b border-white/10 focus:border-gold/40 outline-none py-3 text-white/80 placeholder:text-white/20 font-sans text-base transition-colors duration-300 resize-none"
                   required
@@ -220,6 +220,10 @@ export default function ContactPage() {
                   </svg>
                 )}
               </button>
+
+              <p className="-mt-4 font-light text-[13px] leading-relaxed text-white/30 select-text">
+                No hace falta que tengas nada preparado. Empezamos por entender cómo trabajás hoy.
+              </p>
             </motion.form>
           )}
 
