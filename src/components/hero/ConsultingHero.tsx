@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import GoldenSpiral from "./GoldenSpiral";
+import { openHowItWorks } from "../../lib/howItWorks";
 import LambdaCanvas from "../../LambdaCanvas";
 
 // ─────────────────────────────────────────────────────────────────
@@ -21,13 +22,11 @@ const ACT_DURATIONS = {
 };
 
 // ─────────────────────────────────────────────────────────────────
-// ⚠️ PENDIENTE — URL del mini VSL
-// Reemplazar por la URL definitiva cuando el video corto esté
-// publicado (página externa: YouTube, Loom, Vimeo o sitio propio).
-// El botón "Mira cómo funciona" del hero abre este enlace en
-// una pestaña nueva. Mientras tenga "TU-URL", el botón no funciona.
+// El boton "Mira cómo funciona" usa openHowItWorks() (src/lib/howItWorks.ts):
+// hace scroll suave a Implementacion, y si el mini VSL llega a publicarse
+// —escribiendo su URL en VSL_URL ahi— pasa a abrir el video sin tocar
+// este archivo.
 // ─────────────────────────────────────────────────────────────────
-const VSL_URL = "https://TU-URL-DEL-MINI-VSL";
 
 interface ConsultingHeroProps {
   onEnterSite?: () => void;
@@ -103,7 +102,7 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
             transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-serif font-light text-neutral-100 leading-[1.12] tracking-wide text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-4xl"
           >
-            Tu agencia creció pero el caos también.
+            Tu agencia creció, pero el caos también.
             <br />
             <span className="text-gold italic font-normal block mt-3 md:mt-4">
               Facturas más, duermes menos, controlas menos.
@@ -143,17 +142,16 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
             Lo diseñamos, lo implementamos en ClickUp y tu equipo queda trabajando con claridad.
           </motion.p>
 
-          {/* CTA — enlace externo al mini VSL */}
-          <motion.a
+          {/* CTA — mismo comportamiento que el boton de ValueSection */}
+          <motion.button
+            type="button"
             variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            href={VSL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={openHowItWorks}
             className="cursor-hover mt-9 md:mt-11 inline-flex items-center gap-3 bg-gold hover:bg-gold-hover text-[#050505] px-8 md:px-10 py-4 rounded-full font-mono text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-bold transition-colors duration-300 shadow-[0_0_40px_rgba(197,160,89,0.15)]"
           >
             Mira cómo funciona
-          </motion.a>
+          </motion.button>
 
           {/* Texto secundario */}
           <motion.p

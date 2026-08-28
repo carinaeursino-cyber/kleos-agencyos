@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StatementSection from "../StatementSection";
 import { pillars } from "../data";
+import { openHowItWorks } from "../lib/howItWorks";
 
 // ─────────────────────────────────────────────────────────────────
 // ValueSection — Propuesta de valor
@@ -37,6 +38,18 @@ export default function ValueSection() {
         scrollTrigger: {
           trigger: ".pillar-grid",
           start: "top 82%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      gsap.from(".pillar-cta", {
+        y: 24,
+        opacity: 0,
+        duration: 0.9,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".pillar-cta",
+          start: "top 92%",
           toggleActions: "play none none none",
         },
       });
@@ -86,6 +99,33 @@ export default function ValueSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* ── CTA secundario ──
+            Misma logica que el boton del Hero (openHowItWorks): scroll suave
+            con Lenis a #services-section, o el video si VSL_URL se llega a
+            configurar. Borde fino dorado y text-gold: el mismo tratamiento del
+            footer de la home, para no sumar un estilo nuevo al sitio.
+            Centrado y con mt-14/md:mt-16: el contenedor ya cierra con
+            pb-24 md:pb-36, asi que el aire propio del boton es el de arriba. */}
+        <div className="pillar-cta mt-14 md:mt-16 flex justify-center">
+          <button
+            type="button"
+            onClick={openHowItWorks}
+            className="cursor-hover group inline-flex items-center gap-3 rounded-full border border-gold/30 px-6 py-3 text-gold transition-all duration-300 hover:border-gold hover:bg-gold/5"
+          >
+            <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.3em]">
+              Ver cómo funciona
+            </span>
+            <svg
+              className="h-3 w-3 shrink-0 opacity-60 transition-transform duration-300 group-hover:translate-x-0.5"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>

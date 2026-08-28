@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // ─────────────────────────────────────────────────────────────────
 // KleosMenu — Morphing Button → Fullscreen Overlay
@@ -60,6 +60,39 @@ export default function KleosMenu({ visible, onNavigate }: KleosMenuProps) {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
+            <div className="flex items-center gap-3 sm:gap-5">
+            {/* ── CTA de conversion del header fijo ──
+                Ghost con borde dorado fino, mismo tratamiento del boton del
+                footer (border-gold/30 + text-gold + hover:bg-gold/5) escalado
+                a la barra. El trigger del menu sigue pegado a la esquina, asi
+                que el origen del clip-path del overlay (calc(100% - 48px) 48px)
+                no se mueve y la animacion del menu queda intacta.
+                backdrop-blur + fondo: es una barra fija y pasa sobre texto.
+                En mobile la etiqueta se acorta a "Agendar" para no aplastar el
+                boton de menu en pantallas de 320px.
+                Se oculta con el overlay abierto: este contenedor es z-[100],
+                queda por encima del menu (z-[99]) y el overlay ya tiene su
+                propio enlace a Contacto. */}
+            <Link
+              to="/contacto"
+              className={`cursor-hover group inline-flex items-center gap-2 rounded-full border border-gold/30 bg-[#050505]/70 px-4 py-2 text-gold backdrop-blur-md transition-all duration-300 hover:border-gold hover:bg-gold/5 ${
+                isOpen ? "pointer-events-none opacity-0" : "opacity-100"
+              }`}
+            >
+              <span className="font-mono text-[8px] uppercase tracking-[0.25em] sm:text-[9px] sm:tracking-[0.3em]">
+                <span className="sm:hidden">Agendar</span>
+                <span className="hidden sm:inline">Agendar diagnóstico</span>
+              </span>
+              <svg
+                className="h-3 w-3 shrink-0 opacity-60 transition-transform duration-300 group-hover:translate-x-0.5"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="cursor-hover group relative flex items-center gap-3"
@@ -94,6 +127,7 @@ export default function KleosMenu({ visible, onNavigate }: KleosMenuProps) {
                 {isOpen ? "cerrar" : "menú"}
               </motion.span>
             </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

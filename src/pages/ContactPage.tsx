@@ -222,7 +222,7 @@ export default function ContactPage() {
               </button>
 
               <p className="-mt-4 font-light text-[13px] leading-relaxed text-white/30 select-text">
-                No hace falta que tengas nada preparado. Empezamos por entender cómo trabajás hoy.
+                No hace falta que tengas nada preparado. Empezamos por entender cómo trabajas hoy.
               </p>
             </motion.form>
           )}
