@@ -19,6 +19,7 @@ import FaqSection from "./components/FaqSection";
 import CustomCursor from "./CustomCursor";
 import KleosMenu from "./components/KleosMenu";
 import ContactPage from "./pages/ContactPage";
+import VslPage from "./pages/VslPage";
 
 import { ctaFinalItems } from "./data";
 
@@ -245,6 +246,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/contacto" element={<ContactPage />} />
+      <Route path="/vsl" element={<VslPage />} />
     </Routes>
   );
 }

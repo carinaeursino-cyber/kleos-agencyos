@@ -2,29 +2,36 @@
 // "Cómo funciona" — el comportamiento de ese boton vive aca una sola vez
 // y lo comparten el Hero, ValueSection y cualquier CTA futuro.
 //
-// Mientras VSL_URL tenga el placeholder, el boton hace scroll suave con
-// Lenis hasta la seccion Implementacion (que es donde el visitante ve como
-// funciona el servicio: los 4 frentes). En el momento en que el mini VSL
-// este publicado y se reemplace la URL, la MISMA funcion pasa a abrir el
-// video en una pestaña nueva: ningun componente se toca.
+// Prioridades del boton:
+//   1. VSL_PAGE (/vsl): la landing con el video y el CTA de agendamiento.
+//   2. si se vacia la constante, scroll suave con Lenis a la seccion
+//      Implementacion (donde igual se ve como funciona el servicio).
+// El video en si se embebe dentro de la landing con VSL_EMBED_URL
+// (src/pages/VslPage.tsx), no aca.
 //
 // Por que no un href directo: asi el sitio nunca puede quedar con un enlace
-// roto. Un <a href="https://TU-URL-DEL-MINI-VSL"> es exactamente lo que el
-// hero tenia hoy, y es la causa de que el boton mas visible de la pagina
-// abriera una pagina de error del navegador.
+// roto: el <a href="https://TU-URL-DEL-MINI-VSL"> que tenia el hero abria
+// una pagina de error del navegador.
 // ─────────────────────────────────────────────────────────────────
 
-export const VSL_URL = "https://TU-URL-DEL-MINI-VSL";
+export const VSL_PAGE = "/vsl";
 
 export const SERVICES_SECTION_ID = "services-section";
 
-// "Configurada" = https/http real y sin el marcador de posicion.
+// "Configurada" = URL absoluta (https://...) o ruta interna del sitio
+// (empieza con /), y sin el marcador de posicion. Con esto el boton nunca
+// puede quedar roto: si la constante se vacia, cae en el scroll.
 const isConfigured = (url: string) =>
-  /^https?:\/\//.test(url) && !url.includes("TU-URL");
+  (url.startsWith("/") || /^https?:\/\//.test(url)) && !url.includes("TU-URL");
 
 export function openHowItWorks() {
-  if (isConfigured(VSL_URL)) {
-    window.open(VSL_URL, "_blank", "noopener,noreferrer");
+  // La landing /vsl existe: es el destino real del boton. Se usa
+  // location.assign en vez de un <Link> porque esta funcion vive fuera del
+  // Router (la comparten el hero y ValueSection como onClick). En una
+  // landing de video la recarga completa es irrelevante: no hay estado que
+  // conservar y la pagina no tiene la intro cinematografica.
+  if (isConfigured(VSL_PAGE)) {
+    window.location.assign(VSL_PAGE);
     return;
   }
 
