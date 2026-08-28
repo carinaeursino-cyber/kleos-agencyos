@@ -18,7 +18,7 @@ import {
 
 // ── El problema: síntomas que un Founder reconoce ──
 export const symptoms: Symptom[] = [
-  { id: "☐", text: "Las tareas se asignan por chat y nadie sabe quién es responsable." },
+  { id: "01", text: "Las tareas se asignan por chat y nadie sabe quién es responsable." },
   { id: "02", text: "Todo pasa por ti: decisiones, aprobaciones, destrabes." },
   { id: "03", text: "El equipo pregunta qué hacer porque las prioridades no están claras." },
   { id: "04", text: "La información está repartida entre WhatsApp, mails y documentos." },

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Square } from "lucide-react";
 import StatementSection from "../StatementSection";
 import { symptoms } from "../data";
 
@@ -71,19 +72,6 @@ export default function ProblemSection() {
           toggleActions: "play none none none",
         },
       });
-
-      // Axioma de cierre
-      gsap.from(".problem-axiom", {
-        y: 60,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".problem-axiom",
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -104,9 +92,14 @@ export default function ProblemSection() {
       {/* Introducción + síntomas */}
       <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 pb-20 md:pb-28 relative z-10">
         <div className="problem-intro max-w-3xl mx-auto text-center space-y-4 md:space-y-5 mb-14 md:mb-20 select-text">
-          <p className="text-neutral-300 font-light text-base md:text-lg leading-relaxed">
+          {/* Titular de apertura de la sección. Subió de párrafo (text-base/lg,
+              font-light) a headline: escala grande + peso semibold.
+              Color neutro y fuente sans intactos — la jerarquía se logra solo
+              por tamaño y peso. font-semibold en vez de bold porque index.css
+              carga Inter en 300;400;500;600, así que 700 se sintetizaría mal. */}
+          <h3 className="text-neutral-300 font-semibold text-2xl sm:text-[1.75rem] md:text-4xl lg:text-[2.75rem] leading-[1.15] tracking-tight text-balance">
             Tu gente trabaja bien, pero tu forma de trabajar quedó chica.
-          </p>
+          </h3>
           <p className="text-neutral-500 font-light text-sm md:text-base leading-relaxed">
             ¿Cuántos de estos síntomas reconoces?
           </p>
@@ -124,9 +117,17 @@ export default function ProblemSection() {
               {/* Barra dorada lateral */}
               <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gold/25 group-hover:bg-gold/50 rounded-l-xl transition-colors duration-500" />
 
-              <span className="relative font-mono text-[10px] text-gold/50 group-hover:text-gold transition-colors duration-300 block mb-3">
-                [{s.id}]
-              </span>
+              {/* Casillero vacío — reemplaza la numeración [01]–[08].
+                  Es decorativo (sin estado de clic en esta iteración).
+                  Se usa el icono de lucide en lugar del carácter "☐" porque
+                  U+2610 no está en Inter ni en JetBrains Mono: renderizarlo
+                  como texto provoca fallback de fuente distinto por SO. */}
+              <Square
+                aria-hidden="true"
+                size={14}
+                strokeWidth={1.25}
+                className="relative block mb-3 text-gold/50 group-hover:text-gold transition-colors duration-300"
+              />
               <p className="relative text-neutral-400 group-hover:text-neutral-200 text-[13px] md:text-sm font-light leading-relaxed transition-colors duration-300 select-text">
                 {s.text}
               </p>
@@ -134,25 +135,15 @@ export default function ProblemSection() {
           ))}
         </div>
 
-        {/* Frases de refuerzo (axiomas de las brechas) */}
+        {/* Frases de refuerzo (axiomas de las brechas) — cierre de la sección.
+            El axioma "Crecer significa más caos, no más orden." se eliminó:
+            duplicaba en significado a la tarjeta [08], que ahora cierra el tema. */}
         <div className="problem-axioms mt-12 md:mt-16 max-w-2xl mx-auto text-center space-y-3 md:space-y-4">
           <p className="font-serif italic text-gold text-base md:text-lg font-normal leading-snug select-text">
             “Una operación madura no depende de preguntar. Depende de poder consultar.”
           </p>
           <p className="font-serif italic text-gold text-base md:text-lg font-normal leading-snug select-text">
             “No construiste una agencia para ser el centro de cada problema.”
-          </p>
-        </div>
-
-        {/* Axioma */}
-        <div className="problem-axiom mt-14 md:mt-20 max-w-3xl mx-auto text-center relative">
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent mx-auto mb-6" />
-          <p className="font-serif text-xl md:text-2xl lg:text-3xl font-light leading-snug text-neutral-100 select-text">
-            Crecer significa
-            <br />
-            <span className="text-gold italic">
-              más caos, no más orden.
-            </span>
           </p>
         </div>
       </div>
