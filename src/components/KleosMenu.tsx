@@ -50,52 +50,25 @@ export default function KleosMenu({ visible, onNavigate }: KleosMenuProps) {
 
   return (
     <>
-      {/* ── Botón trigger ── */}
+      {/* ── Barra superior: trigger del menu (izquierda) + CTA (derecha) ──
+          El contenedor ocupa todo el ancho para poder separar los dos
+          elementos con justify-between, y por eso lleva pointer-events-none:
+          si no, la franja fija de arriba (~80px) taparia los clics de todo lo
+          que pase por debajo. Cada elemento recupera los suyos con
+          pointer-events-auto. items-center alinea el boton de menu con el
+          centro vertical de la pastilla del CTA, que es mas alta. */}
       <AnimatePresence>
         {visible && (
           <motion.div
-            className="fixed top-0 right-0 z-[100] p-6 md:p-8"
+            className="fixed top-0 right-0 left-0 z-[100] flex items-center justify-between p-6 md:p-8 pointer-events-none"
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="flex items-center gap-3 sm:gap-5">
-            {/* ── CTA de conversion del header fijo ──
-                Ghost con borde dorado fino, mismo tratamiento del boton del
-                footer (border-gold/30 + text-gold + hover:bg-gold/5) escalado
-                a la barra. El trigger del menu sigue pegado a la esquina, asi
-                que el origen del clip-path del overlay (calc(100% - 48px) 48px)
-                no se mueve y la animacion del menu queda intacta.
-                backdrop-blur + fondo: es una barra fija y pasa sobre texto.
-                En mobile la etiqueta se acorta a "Agendar" para no aplastar el
-                boton de menu en pantallas de 320px.
-                Se oculta con el overlay abierto: este contenedor es z-[100],
-                queda por encima del menu (z-[99]) y el overlay ya tiene su
-                propio enlace a Contacto. */}
-            <Link
-              to="/contacto"
-              className={`cursor-hover group inline-flex items-center gap-2 rounded-full border border-gold/30 bg-[#050505]/70 px-4 py-2 text-gold backdrop-blur-md transition-all duration-300 hover:border-gold hover:bg-gold/5 ${
-                isOpen ? "pointer-events-none opacity-0" : "opacity-100"
-              }`}
-            >
-              <span className="font-mono text-[8px] uppercase tracking-[0.25em] sm:text-[9px] sm:tracking-[0.3em]">
-                <span className="sm:hidden">Agendar</span>
-                <span className="hidden sm:inline">Agendar diagnóstico</span>
-              </span>
-              <svg
-                className="h-3 w-3 shrink-0 opacity-60 transition-transform duration-300 group-hover:translate-x-0.5"
-                viewBox="0 0 14 14"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="cursor-hover group relative flex items-center gap-3"
+              className="cursor-hover group relative pointer-events-auto flex items-center gap-3"
               aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
             >
               <div className="flex flex-col gap-[5px] w-5">
@@ -127,7 +100,34 @@ export default function KleosMenu({ visible, onNavigate }: KleosMenuProps) {
                 {isOpen ? "cerrar" : "menú"}
               </motion.span>
             </button>
-            </div>
+
+            {/* ── CTA de conversion, arriba a la derecha ──
+                Ghost con borde dorado fino: mismo tratamiento del boton del
+                footer (border-gold/30 + text-gold + hover:bg-gold/5) escalado
+                a la barra. Va suelto en el extremo opuesto al menu, asi no
+                compite con el logo lambda del rail izquierdo en desktop ni con
+                el trigger. El fondo + blur es porque la barra es fija y pasa
+                sobre texto. Se oculta con el overlay abierto: este contenedor
+                es z-[100], queda por encima del menu (z-[99]), y el overlay ya
+                tiene su propio enlace a Contacto. */}
+            <Link
+              to="/contacto"
+              className={`cursor-hover group pointer-events-auto inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-gold/30 bg-[#050505]/70 px-4 py-2 text-gold backdrop-blur-md transition-all duration-300 hover:border-gold hover:bg-gold/5 ${
+                isOpen ? "opacity-0 pointer-events-none" : "opacity-100"
+              }`}
+            >
+              <span className="font-mono text-[8px] uppercase tracking-[0.25em] sm:text-[9px] sm:tracking-[0.3em]">
+                Agendar diagnóstico
+              </span>
+              <svg
+                className="h-3 w-3 shrink-0 opacity-60 transition-transform duration-300 group-hover:translate-x-0.5"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
@@ -138,9 +138,9 @@ export default function KleosMenu({ visible, onNavigate }: KleosMenuProps) {
           <motion.div
             key="menu-overlay"
             className="fixed inset-0 z-[99] bg-[#050505] flex flex-col overflow-y-auto overscroll-contain"
-            initial={{ clipPath: "circle(0% at calc(100% - 48px) 48px)" }}
-            animate={{ clipPath: "circle(150% at calc(100% - 48px) 48px)" }}
-            exit={{ clipPath: "circle(0% at calc(100% - 48px) 48px)" }}
+            initial={{ clipPath: "circle(0% at 48px 48px)" }}
+            animate={{ clipPath: "circle(150% at 48px 48px)" }}
+            exit={{ clipPath: "circle(0% at 48px 48px)" }}
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
           >
             {/* Línea láser superior */}

@@ -268,7 +268,11 @@ export default function ServicesSection() {
 
               {/* Resultado */}
               <div className="border-t border-white/5 pt-3 sm:pt-4 shrink-0">
-                <span className="font-mono text-[7px] sm:text-[8px] tracking-[0.25em] text-gold uppercase font-bold select-none">
+                {/* El label pasa a blanco de marca: text-neutral-100 es #f5f5f5,
+                    el mismo hex de body{color} en index.css (text-white seria
+                    #fff puro, mas duro a 8px). El gold se queda solo en la cita,
+                    que es lo que tiene que brillar. */}
+                <span className="font-mono text-[7px] sm:text-[8px] tracking-[0.25em] text-neutral-100 uppercase font-bold select-none">
                   Resultado
                 </span>
                 <p className="font-serif italic text-gold text-sm sm:text-base md:text-xl font-normal leading-snug mt-1 select-text">

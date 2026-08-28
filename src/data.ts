@@ -226,12 +226,15 @@ export const fitNo: FitItem[] = [
 ];
 
 // ── Sobre Carina ──
+// Son 6 a proposito: AboutSection los pinta en grid-cols-1 sm:grid-cols-2,
+// asi que con 5 el ultimo chip quedaba solo y hueco en la tercera fila.
 export const aboutFocus: string[] = [
   "Gestión de proyectos.",
   "Diseño de procesos.",
   "Coordinación de equipos.",
   "Transformación digital.",
   "Mejora continua.",
+  "Arquitectura de sistemas.",
 ];
 
 // ── Diferenciador ──

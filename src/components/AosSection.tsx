@@ -147,13 +147,15 @@ export default function AosSection() {
               {/* Acento superior */}
               <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-              {/* items-baseline -> items-center: un SVG no tiene línea base de
-                  texto, y con baseline el ícono caía 2-3 px contra el label. */}
-              <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-5 select-none">
+              {/* Cabecera de la tarjeta: solo el icono dorado.
+                  Llevaba a la derecha la etiqueta "Layer", eliminada por
+                  decorativa. Se retira tambien justify-between: con un unico
+                  hijo no hacia nada (flex-start es el default). items-center se
+                  conserva de cuando el icono se alineaba contra el label (un SVG
+                  no tiene linea base de texto) para que la cabecera siga ordenada
+                  si algun dia vuelve a dividirse en dos. */}
+              <div className="flex items-center border-b border-white/5 pb-4 mb-5 select-none">
                 <LayerIcon className="h-4 w-4 shrink-0 text-gold" strokeWidth={1.25} aria-hidden="true" />
-                <span className="font-mono text-[8px] tracking-widest text-neutral-600 uppercase">
-                  Layer
-                </span>
               </div>
 
               <h3 className="font-serif text-xl md:text-2xl font-light tracking-tight text-neutral-100 group-hover:text-gold transition-colors duration-500 select-text">

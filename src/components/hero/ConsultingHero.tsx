@@ -102,7 +102,7 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
             transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-serif font-light text-neutral-100 leading-[1.12] tracking-wide text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-4xl"
           >
-            Tu agencia creció, pero el caos también.
+            Tu agencia creció pero el caos también.
             <br />
             <span className="text-gold italic font-normal block mt-3 md:mt-4">
               Facturas más, duermes menos, controlas menos.
@@ -116,30 +116,19 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
             className="w-24 md:w-32 h-[1px] bg-gold/20 my-7 md:my-9"
           />
 
-          {/* Frase puente */}
+          {/* Subtitulo — una sola oracion. Reemplaza a la frase puente y a los
+              dos parrafos de apoyo: la idea completa entra en una linea y el
+              boton queda mucho mas arriba del pliegue.
+              text-base md:text-lg (16/18px) y max-w-2xl: a 18px esa medida da
+              ~2 lineas en desktop y ~3 en mobile, que es el corte cómodo
+              para leer sin que el parrafo se vea angosto.
+              text-balance evita la palabra huerfana en la ultima linea. */}
           <motion.p
             variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="text-neutral-400 font-light text-xs md:text-sm leading-relaxed max-w-xl select-text"
+            className="text-neutral-300 font-light text-base md:text-lg leading-relaxed max-w-2xl text-balance select-text"
           >
-            El crecimiento solo expuso lo que faltaba: un sistema.
-          </motion.p>
-
-          {/* Copy de apoyo */}
-          <motion.p
-            variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="text-neutral-300 font-light text-sm md:text-base lg:text-lg leading-relaxed max-w-2xl mt-4"
-          >
-            Agency OS: un sistema operativo que organiza procesos, responsabilidades
-            y prioridades de tu agencia.
-          </motion.p>
-          <motion.p
-            variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="text-neutral-400 font-light text-xs md:text-sm leading-relaxed max-w-xl mt-3"
-          >
-            Lo diseñamos, lo implementamos en ClickUp y tu equipo queda trabajando con claridad.
+            En Agency OS organizamos tus procesos, responsabilidades y prioridades en ClickUp para que tu agencia funcione sin depender de ti.
           </motion.p>
 
           {/* CTA — mismo comportamiento que el boton de ValueSection */}
@@ -148,7 +137,7 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
             variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             onClick={openHowItWorks}
-            className="cursor-hover mt-9 md:mt-11 inline-flex items-center gap-3 bg-gold hover:bg-gold-hover text-[#050505] px-8 md:px-10 py-4 rounded-full font-mono text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-bold transition-colors duration-300 shadow-[0_0_40px_rgba(197,160,89,0.15)]"
+            className="cursor-hover mt-11 md:mt-14 inline-flex items-center gap-3 bg-gold hover:bg-gold-hover text-[#050505] px-8 md:px-10 py-4 rounded-full font-mono text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-bold transition-colors duration-300 shadow-[0_0_40px_rgba(197,160,89,0.15)]"
           >
             Mira cómo funciona
           </motion.button>
