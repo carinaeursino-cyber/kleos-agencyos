@@ -97,8 +97,8 @@ export default function ProblemSection() {
         variant="deblur"
         eyebrow="El problema"
         bottomLeft="KLEOS CONSULTORÍA"
-        text="El problema no es tu equipo."
-        highlight="Es que no hay un sistema que organice cómo trabaja."
+        text="Tu equipo no llegó a su límite."
+        highlight="Solo necesita un sistema que organice cómo trabaja."
       />
 
       {/* Introducción + síntomas */}
