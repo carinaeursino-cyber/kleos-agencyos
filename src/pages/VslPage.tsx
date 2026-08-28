@@ -333,83 +333,85 @@ export default function VslPage({ videoUrl = VSL_EMBED_URL }: VslPageProps = {})
         </div>
       </section>
 
-      {/* ── Sobre Carina: la bio card de AboutSection.tsx (foto circular con
-          glow, nombre en gold, subtitulo, titulo destacado y los 6 chips con
-          su receta rounded-lg + border-white/[0.07] + bg-[#070708] + punto
-          bg-gold/70), pero en una sola columna centrada: se elimina el split
-          4/8 del home y todo queda en el eje, como el resto de la landing.
-          Los textos de ancho se capan a max-w-2xl (672px) para que el
-          parrafo y la grilla no estiren los 800px del card; a 672 cada chip
-          queda en ~331px, el texto en ~285px y "Sistemas sin dependencia
-          del fundador." entra en una linea igual que en el home. ── */}
+            {/* ── Sobre Carina: bloque centrado (avatar con anillo dorado, nombre,
+          una linea de autoridad, bio larga y los 6 enfoques bajo un filete).
+          Es TU maquetacion de esta ronda, no la bio card del home: el avatar
+          es mas chico (112/128px vs 144/176), el anillo es un gradiente en vez
+          de border + glow de esquina, y hay un border-t antes de los chips. ── */}
       <section className="relative z-10 border-t border-white/10 px-5 sm:px-6 md:px-12 py-20 md:py-28">
         <div className="mx-auto max-w-4xl text-center">
           <p className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] text-gold uppercase mb-4 select-none">
             Sobre Carina
           </p>
 
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0B0B0C] p-7 transition-colors duration-500 hover:border-gold/25 md:p-12">
-            <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-gold/[0.04] blur-3xl pointer-events-none" />
-
-            <div className="relative flex flex-col items-center text-center">
-              {/* Foto circular con glow dorado, centrada arriba */}
-              {carinaPhoto ? (
-                <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border border-gold/30 shadow-[0_0_60px_rgba(197,160,89,0.12)]">
-                  <img
-                    src={carinaPhoto}
-                    alt="Carina Ursino"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-gold/20 pointer-events-none" />
+          {/* Tarjeta Sobre Carina - estructura centrada */}
+          <div className="relative overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/60 p-8 backdrop-blur-sm md:p-12">
+            <div className="flex flex-col items-center text-center">
+              {/* Avatar y perfil */}
+              <div className="mb-8 flex flex-col items-center">
+                <div className="relative mb-4 h-28 w-28 rounded-full bg-gradient-to-b from-gold/40 via-gold/10 to-transparent p-1 md:h-32 md:w-32">
+                  {carinaPhoto ? (
+                    <img
+                      src={carinaPhoto}
+                      alt="Carina Ursino"
+                      className="h-full w-full rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center rounded-full bg-[#0B0B0C]">
+                      <span className="font-serif text-5xl font-light italic text-gold select-none">
+                        C
+                      </span>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full border border-gold/30 flex items-center justify-center bg-gradient-to-b from-[#0B0B0C] to-[#050505] shadow-[0_0_60px_rgba(197,160,89,0.08)]">
-                  <div className="absolute inset-2 rounded-full border border-gold/10" />
-                  <span className="font-serif text-6xl md:text-7xl text-gold italic font-light select-none">
-                    C
-                  </span>
+
+                {/* El nombre va UNA sola vez. Tu bloque tenia un <h3>Carina
+                    Ursino</h3> y debajo un <span>CARINA URSINO</span>: se leia
+                    dos veces. Queda el <h3> (le da jerarquia al bloque para
+                    lectores de pantalla) con la receta del sitio para el nombre
+                    bajo la foto: font-mono + gold + uppercase + 0.3em. */}
+                <h3 className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-gold select-none">
+                  Carina Ursino
+                </h3>
+
+                {/* Una sola linea de autoridad, sin el cargo doble en 3 renglones */}
+                <p className="mt-2 text-xs font-mono uppercase tracking-wider text-neutral-400">
+                  PMO &amp; Consultora de Procesos para Agencias
+                </p>
+              </div>
+
+              {/* Bio centrada */}
+              <p className="max-w-2xl text-base md:text-lg leading-relaxed text-neutral-300 font-light select-text">
+                Durante más de <span className="text-gold font-medium">13 años</span>{" "}
+                me he dedicado a la gestión de proyectos como PM y COO en agencias,
+                startups y equipos digitales. Tras ver cómo la falta de procesos
+                afecta una y otra vez a tantas empresas, diseñé una metodología
+                propia. Mi trabajo no es dar recomendaciones teóricas, sino
+                implementar la arquitectura exacta que tu agencia necesita en
+                ClickUp para que entregues a tiempo, delegues con tranquilidad y
+                dejes de ser el cuello de botella de tu propio negocio.
+              </p>
+
+              {/* Pilares / chips, separados de la bio con un filete */}
+              <div className="mt-12 md:mt-16 w-full max-w-3xl border-t border-neutral-800/80 pt-8">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 block mb-6">
+                  MI ENFOQUE COMBINA
+                </span>
+
+                {/* Los 6 strings ya existen arriba como vslFocus (los consume
+                    solo esta tarjeta), asi que se mapea esa constante en vez de
+                    re-escribir el array aca: mismo render, una sola fuente. */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3.5 text-left">
+                  {vslFocus.map((item) => (
+                    <div
+                      key={item}
+                      className="flex items-center space-x-3 rounded-xl border border-neutral-800 bg-neutral-950/60 px-5 py-3.5 text-sm text-neutral-300"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-gold shrink-0"></span>
+                      <span className="select-text">{item}</span>
+                    </div>
+                  ))}
                 </div>
-              )}
-
-              {/* Nombre en gold, centrado debajo de la foto */}
-              <p className="mt-6 font-mono text-[9px] md:text-[10px] tracking-[0.3em] text-gold uppercase select-none">
-                Carina Ursino
-              </p>
-
-              {/* Subtitulo en las 3 lineas del home, centrado */}
-              <p className="mt-2 text-neutral-500 text-xs font-light leading-relaxed select-text">
-                Project &amp; Operations Manager · PMO
-                <br />
-                Consultora en transformación digital
-                <br />y optimización de procesos
-              </p>
-
-              {/* Titulo destacado */}
-              <p className="mt-8 md:mt-10 max-w-2xl font-serif text-xl md:text-2xl lg:text-3xl font-light leading-snug text-neutral-100 select-text">
-                Más de <span className="text-gold font-normal">13 años</span>{" "}
-                ordenando operaciones, proyectos y equipos remotos para que
-                dejen de improvisar y empiecen a trabajar con claridad.
-              </p>
-
-              <p className="mt-6 font-mono text-[9px] tracking-[0.25em] text-neutral-500 uppercase select-none">
-                Mi enfoque combina
-              </p>
-
-              {/* Los 6 chips, 2 x 3 desde sm. justify-center es el unico class
-                  extra: sin el, el punto + el texto quedan pegados a la
-                  izquierda de cada chip y la grilla no lee centrada. */}
-              <div className="mt-4 grid max-w-2xl grid-cols-1 gap-2.5 sm:grid-cols-2">
-                {vslFocus.map((f) => (
-                  <div
-                    key={f}
-                    className="flex items-center justify-center gap-2.5 rounded-lg border border-white/[0.07] bg-[#070708] px-4 py-2.5"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-gold/70 shrink-0" />
-                    <span className="text-neutral-300 text-[13px] font-light select-text">
-                      {f}
-                    </span>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
