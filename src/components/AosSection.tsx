@@ -31,7 +31,7 @@ const dashboardImages = import.meta.glob("../assets/images/*.{png,jpg,jpeg,webp}
 }) as Record<string, string>;
 
 // Captura y alt por tarjeta, emparejados por id de data.ts.
-// Vive aca y no en data.ts por el mismo motivo que la foto de Carina vive en
+// Vive aca y no in data.ts por el mismo motivo que la foto de Carina vive en
 // AboutSection: es cableado de un asset, no copy editable.
 const dashboardCaptures: Record<string, { file: string; alt: string }> = {
   "01": {
@@ -136,7 +136,7 @@ export default function AosSection() {
         </div>
 
         {/* Capas del sistema */}
-        <div className="aos-layers-grid grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-24 md:mb-36">
+        <div className="aos-layers-grid grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {aosLayers.map((layer) => {
             const LayerIcon = layerIcons[layer.id] ?? Building2;
             return (
@@ -169,9 +169,22 @@ export default function AosSection() {
             );
           })}
         </div>
+      </div>
 
+      {/* ── Separador entre las 3 capas y los dashboards ──
+          Hijo directo del <section>, igual que los cortes reales del sitio:
+          border-t border-white/10 aplicado sobre un elemento que ocupa el
+          ancho de viewport, no el de max-w-6xl. Fuera del contenedor a
+          proposito, si no quedaria cortado a 1152px.
+          El aire lo dan los py-24 md:py-36 de los dos contenedores, que son
+          exactamente los que delimitan los otros 10 cortes (App.tsx:207,
+          StatementSection:248, About:87, Automation:63, Cta:72, Faq:54,
+          Fit:52, Onboarding:64, Services:169, Aos:113). */}
+      <div className="border-t border-white/10" />
+
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 py-24 md:py-36 relative z-10">
         {/* Dashboards de control */}
-        <div className="border-t border-white/10 pt-24 md:pt-36">
+        <div className="mb-16 md:mb-24">
           <div className="aos-header max-w-3xl mb-8 md:mb-12">
             <p className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] text-gold uppercase mb-4 select-none">
               Dashboards de control
