@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import ConsultingHero from "./components/hero/ConsultingHero";
 import ProblemSection from "./components/ProblemSection";
-import ValueSection from "./components/ValueSection";
+import StatsSection from "./components/StatsSection";
 import ServicesSection from "./components/ServicesSection";
 import AosSection from "./components/AosSection";
 import OnboardingSection from "./components/OnboardingSection";
@@ -26,10 +26,14 @@ import { AUDIT_ROUTE } from "./lib/audit";
 import { ctaFinalItems } from "./data";
 
 // ── Navegación lateral (scroll spy) ──
+// El orden de esta lista tiene que ser el orden real del scroll: el spy activa el
+// item por la posicion en el array (forEach + setActiveSection(idx)) y el numero
+// que se lee en el costado sale de ese mismo idx. Por eso IMPLEMENTACIÓN bajo al
+// idx 2: desde la fusion, la seccion del sistema va antes que el proceso.
 const RAIL_ITEMS = [
   { id: "problem-section",  label: "PROBLEMA",       idx: 0 },
-  { id: "services-section", label: "IMPLEMENTACIÓN", idx: 1 },
-  { id: "system-section",   label: "SISTEMA",        idx: 2 },
+  { id: "system-section",   label: "SISTEMA",        idx: 1 },
+  { id: "services-section", label: "IMPLEMENTACIÓN", idx: 2 },
 ];
 
 const LEFT_ITEMS = RAIL_ITEMS.filter((i) => i.idx % 2 === 0);
@@ -167,16 +171,26 @@ function HomePage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <main className="lg:pl-24 lg:pr-24">
+            {/* Orden del home: primero el dolor, despues la solucion con su prueba
+                visual (las 3 capas + los dashboards, que viven en AosSection, despues
+                onboarding y automatizacion) y recien ahi el proceso de
+                implementacion. ValueSection ya no existe como franja: su statement y
+                su boton fueron a parar dentro de AosSection. Entre el problema y la
+                solucion entra StatsSection, la franja de contadores: no es un capitulo del
+                menu ni del rail lateral, es una banda. */}
             <ProblemSection />
-            <ValueSection />
-            <ServicesSection />
+            <StatsSection />
             <AosSection />
             <OnboardingSection />
             <AutomationSection />
+            <ServicesSection />
             <FitSection />
             <AboutSection />
 
-            {/* CTA intermedio */}
+            {/* CTA intermedio. La etiqueta del boton es a proposito la misma que
+                CORE_LABEL en components/audit/AuditReading.tsx: las dos puertas
+                de agenda del sitio tienen que decir lo mismo. Los comentarios JSX
+                van AFUERA de la lista de atributos; adentro rompen el parseo. */}
             <CtaBanner
               id="cta-revision"
               eyebrow="Revisión operativa"
@@ -198,7 +212,7 @@ function HomePage() {
               highlight="una operación a la altura."
               intro="No necesitas más urgencias, más reuniones ni más información perdida en chats. Necesitas saber:"
               items={ctaFinalItems}
-              buttonLabel="Agendar conversación"
+              buttonLabel="Agenda tu sesión exploratoria"
               action="contact"
               footerText="Agency OS · Orden. Claridad. Escala."
             />
@@ -221,14 +235,21 @@ function HomePage() {
               </div>
               <div className="w-16 sm:w-20 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent mb-8 sm:mb-10" />
               <p className="font-serif text-lg sm:text-xl md:text-2xl text-neutral-200 font-light tracking-wide mb-6 sm:mb-8 max-w-lg leading-relaxed">
-                Ordenemos tu operación. El primer paso es una conversación.
+                El caos no es el precio del éxito. Es el costo de no tener un sistema.
               </p>
               <Link
                 to="/contacto"
                 className="cursor-hover inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-3.5 border border-gold/30 hover:border-gold hover:bg-gold/5 text-gold text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.2em] sm:tracking-[0.25em] rounded-full transition-all duration-300"
               >
-                Agendar Conversación
+                Agenda tu sesión exploratoria
               </Link>
+              {/* Microcopy debajo del boton: la misma clase que smallText en
+                  CtaBanner, para que las dos puertas de agenda del sitio se vean
+                  igual. El <p> del copyright conserva su mt-12/md:mt-16, asi que
+                  el bloque Footer crece ~68px y nada mas se mueve. */}
+              <p className="mt-5 text-neutral-500 font-light text-xs md:text-[13px] leading-relaxed select-text">
+                Una conversación directa sobre tu operación.
+              </p>
               <p className="mt-12 sm:mt-16 font-mono text-[7px] sm:text-[9px] text-neutral-700 uppercase tracking-[0.25em] sm:tracking-[0.3em]">
                 © 2026 KLEOS CONSULTORÍA · OPERACIONES PARA AGENCIAS
               </p>

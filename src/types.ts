@@ -2,6 +2,19 @@
 // KLEOS CONSULTORÍA — Tipos de contenido
 // ─────────────────────────────────────────────────────────────────
 
+export interface Stat {
+  id: string;
+  /** Texto fijo antes del numero, ej. "–" en 5–50. No entra en el conteo. */
+  prefix: string;
+  /** Valor del primer frame de la animacion. */
+  from: number;
+  /** Valor final: lo que se pinta antes de disparar, sin JS y con movimiento reducido. */
+  to: number;
+  /** Texto fijo despues del numero, ej. "+". */
+  suffix: string;
+  label: string;
+}
+
 export interface Symptom {
   id: string;
   text: string;

@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Building2, Crown, Handshake, LayoutDashboard, Settings } from "lucide-react";
 import { aosLayers, controlDashboards } from "../data";
+import { openHowItWorks } from "../lib/howItWorks";
 
 // Íconos de marca por tarjeta, emparejados por id de data.ts. Línea fina
 // (strokeWidth 1.25) y el mismo text-gold sólido que tenían los números:
@@ -33,7 +34,7 @@ const dashboardImages = import.meta.glob("../assets/images/*.{png,jpg,jpeg,webp}
 }) as Record<string, string>;
 
 // Captura y alt por tarjeta, emparejados por id de data.ts.
-// Vive aca y no in data.ts por el mismo motivo que la foto de Carina vive en
+// Vive aca y no en data.ts por el mismo motivo que la foto de Carina vive en
 // AboutSection: es cableado de un asset, no copy editable.
 const dashboardCaptures: Record<string, { file: string; alt: string }> = {
   "01": {
@@ -103,6 +104,21 @@ export default function AosSection() {
       reveal(".aos-header > *", ".aos-header");
       reveal(".aos-layer-card", ".aos-layers-grid");
       reveal(".aos-dashboard-card", ".aos-dashboards-grid");
+
+      // El CTA no pasa por reveal(): venia de ValueSection con su propio tween
+      // mas suave (y 24, start top 92%) porque es un boton suelto, no una grilla
+      // de tarjetas. Se conserva para que el boton se vea igual que antes.
+      gsap.from(".aos-cta", {
+        y: 24,
+        opacity: 0,
+        duration: 0.9,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".aos-cta",
+          start: "top 92%",
+          toggleActions: "play none none none",
+        },
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -128,12 +144,22 @@ export default function AosSection() {
           <p className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] text-gold uppercase mb-4 select-none">
             Agency Operating System
           </p>
+          {/* El h2 y la linea dorada son el statement que vivia en ValueSection,
+              que se fusiono aca. El h2 conserva la clase del que habia (el mismo
+              tamanio del resto de las secciones). Ojo con el cambio de reparto:
+              antes el dorado era la SEGUNDA MITAD del titulo (un <span> adentro
+              del h2) y ahora es una linea aparte, asi que el h2 queda sin <span>
+              y sin el {" "} de separacion.
+              La linea dorada usa la receta de linea dorada suelta del sitio (la de
+              ServicesSection y el cierre de ProblemSection: font-serif + italic +
+              text-gold + font-normal). Unica desviacion de la receta que habia aca:
+              max-w-2xl en vez de max-w-xl, porque son 3 frases y 197 caracteres. */}
           <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl font-light tracking-tight leading-[1.02] text-neutral-100 select-text">
-            Todo tu negocio, organizado{" "}
-            <span className="text-gold italic font-normal">en un solo sistema.</span>
+            Agency OS reemplaza el caos por un sistema.
           </h2>
-          <p className="mt-5 text-neutral-500 font-light text-sm md:text-base leading-relaxed max-w-xl select-text">
-            Dirección, gestión interna y operación con clientes. Sin saltar entre herramientas.
+          <p className="mt-5 max-w-2xl font-serif italic text-gold text-base md:text-lg font-normal leading-relaxed select-text">
+            Procesos que se ejecutan sin que tengas que recordarlos. Responsabilidades
+            que no hay que perseguir. Todo en un solo lugar.
           </p>
         </div>
 
@@ -173,6 +199,34 @@ export default function AosSection() {
             );
           })}
         </div>
+
+        {/* ── CTA secundario ──
+            Venia de ValueSection; se trajo aca, centrado y debajo de las 3
+            tarjetas, para que el bloque del sistema no cierre con las tarjetas
+            solas. Misma logica que el boton del Hero (openHowItWorks -> /vsl, con
+            caida a scroll en #services-section si VSL_PAGE se desconfigura; por eso
+            no va un <Link> duro). Borde fino dorado, text-gold y la etiqueta en
+            mayusculas por la clase: el tratamiento del footer de la home, sin sumar
+            un estilo nuevo al sitio. */}
+        <div className="aos-cta mt-14 md:mt-16 flex justify-center">
+          <button
+            type="button"
+            onClick={openHowItWorks}
+            className="cursor-hover group inline-flex items-center gap-3 rounded-full border border-gold/30 px-6 py-3 text-gold transition-all duration-300 hover:border-gold hover:bg-gold/5"
+          >
+            <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.3em]">
+              Ver cómo funciona
+            </span>
+            <svg
+              className="h-3 w-3 shrink-0 opacity-60 transition-transform duration-300 group-hover:translate-x-0.5"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* ── Separador entre las 3 capas y los dashboards ──
@@ -181,9 +235,10 @@ export default function AosSection() {
           ancho de viewport, no el de max-w-6xl. Fuera del contenedor a
           proposito, si no quedaria cortado a 1152px.
           El aire lo dan los py-24 md:py-36 de los dos contenedores, que son
-          exactamente los que delimitan los otros 10 cortes (App.tsx:207,
-          StatementSection:248, About:87, Automation:63, Cta:72, Faq:54,
-          Fit:52, Onboarding:64, Services:169, Aos:113). */}
+          exactamente los que delimitan los demas cortes del home (ProblemSection,
+          ServicesSection, OnboardingSection, AutomationSection, FitSection,
+          AboutSection, FaqSection y los dos CtaBanner). No se citan numeros de
+          linea a proposito: se rompen con el primer corte de secciones. */}
       <div className="border-t border-white/10" />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 py-24 md:py-36 relative z-10">

@@ -1,6 +1,8 @@
 // ─────────────────────────────────────────────────────────────────
 // "Cómo funciona" — el comportamiento de ese boton vive aca una sola vez
-// y lo comparten el Hero, ValueSection y cualquier CTA futuro.
+// y lo comparten el Hero y AosSection (el boton "Ver como funciona" que vivo ahi
+// despues de la fusion con el viejo bloque de ValueSection), mas cualquier CTA
+// futuro.
 //
 // Prioridades del boton:
 //   1. VSL_PAGE (/vsl): la landing con el video y el CTA de agendamiento.
@@ -27,7 +29,7 @@ const isConfigured = (url: string) =>
 export function openHowItWorks() {
   // La landing /vsl existe: es el destino real del boton. Se usa
   // location.assign en vez de un <Link> porque esta funcion vive fuera del
-  // Router (la comparten el hero y ValueSection como onClick). En una
+  // Router (la comparten el Hero y AosSection como onClick). En una
   // landing de video la recarga completa es irrelevante: no hay estado que
   // conservar y la pagina no tiene la intro cinematografica.
   if (isConfigured(VSL_PAGE)) {
@@ -38,7 +40,8 @@ export function openHowItWorks() {
   const target = document.getElementById(SERVICES_SECTION_ID);
   if (!target) return;
 
-  // App.tsx guarda la instancia en window (linea 51). Se usa SU scrollTo y no
+  // App.tsx guarda la instancia en window (el `window.lenis = lenis` del efecto
+  // de Lenis, en HomePage). Se usa SU scrollTo y no
   // scrollIntoView: con Lenis interceptando la rueda, el scroll nativo "smooth"
   // pelea con el suavizado propio y el salto queda cortado o a saltos.
   type LenisLike = { scrollTo?: (t: HTMLElement, o?: Record<string, unknown>) => void };

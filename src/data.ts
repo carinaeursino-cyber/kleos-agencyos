@@ -1,4 +1,5 @@
 import {
+  Stat,
   Symptom,
   Pillar,
   ConsultingService,
@@ -15,6 +16,19 @@ import {
 // Regla: dolor del cliente → consecuencia → resultado → solución.
 // Vender el resultado antes que el método.
 // ─────────────────────────────────────────────────────────────────
+
+// ── La franja de credibilidad (StatsSection) ──
+// Entra en la pagina entre los sintomas y la solucion. El numero que se anima
+// vive en `from`/`to`; el prefijo y el sufijo son texto fijo, asi que la raya EN
+// de "5–" y los "+" nunca los toca el conteo.
+// `to` es ademas lo que se pinta antes de que la franja entre en viewport: sin JS
+// o con "prefers-reduced-motion" la banda se lee completa.
+export const stats: Stat[] = [
+  { id: "01", prefix: "", from: 0, to: 7, suffix: "+", label: "Agencias operadas desde adentro." },
+  { id: "02", prefix: "", from: 0, to: 70, suffix: "+", label: "Flujos operativos mapeados." },
+  { id: "03", prefix: "", from: 0, to: 400, suffix: "+", label: "Patrones de ejecución analizados." },
+  { id: "04", prefix: "5–", from: 5, to: 50, suffix: "", label: "Personas por equipo. El mismo patrón operativo en todas." },
+];
 
 // ── El problema: síntomas que un Founder reconoce ──
 // Son 6. Estaban estas dos y se sacaron a pedido (2026-08-29), por si vuelven:
@@ -224,26 +238,28 @@ export const automations: AutomationItem[] = [
 
 // ── Cómo trabajamos ──
 // ── Para quién es / no es ──
-
- export const fitYes: FitItem[] = [
+export const fitYes: FitItem[] = [
   { id: "01", text: "Tienes clientes activos y un equipo, interno o externo." },
   { id: "02", text: "Tu agencia creció y la operación quedó atrás." },
   { id: "03", text: "Tú concentras demasiadas decisiones." },
-  { id: "04", text: "Quieres dejar de apagar incendios y empezar a prevenirlos." }, // ←
+  { id: "04", text: "Quieres dejar de apagar incendios y empezar a prevenirlos." },
   { id: "05", text: "Buscas implementar, no solo recibir consejos." },
-  { id: "06", text: "Quieres que tu equipo sepa qué hacer sin que se lo digas." }, // ←
+  { id: "06", text: "Quieres que tu equipo sepa qué hacer sin que se lo digas." },
 ];
 
 export const fitNo: FitItem[] = [
   { id: "01", text: "Buscas una plantilla sin adaptar a tu agencia." },
   { id: "02", text: "No quieres documentar tu forma de trabajar." },
-  { id: "03", text: "Crees que el caos es parte de la creatividad." }, // ←
+  { id: "03", text: "Crees que el caos es parte de la creatividad." },
   { id: "04", text: "Todavía no tienes un servicio definido." },
 ];
 
 // ── Sobre Carina ──
 // Son 6 a proposito: AboutSection los pinta en grid-cols-1 sm:grid-cols-2,
 // asi que con 5 el ultimo chip quedaba solo y hueco en la tercera fila.
+// El nombre del array sigue siendo `aboutFocus` (lo importa AboutSection por
+// ese nombre) pero el contenido ya no son habilidades: son los 6 beneficios
+// que pinta debajo de la etiqueta "Lo que obtienes al trabajar conmigo:".
 export const aboutFocus: string[] = [
   "Procesos que se ejecutan sin que tengas que recordarlos.",
   "Un sistema que escala contigo, no contra ti.",
