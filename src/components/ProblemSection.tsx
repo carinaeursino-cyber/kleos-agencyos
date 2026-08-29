@@ -86,7 +86,11 @@ export default function ProblemSection() {
         eyebrow="El problema"
         bottomLeft="KLEOS CONSULTORÍA"
         text="Tu equipo no llegó a su límite."
-        highlight="Solo necesita un sistema que organice cómo trabaja."
+        emphasis="Tu forma de operar sí."
+        highlight="Porque no puedes escalar con procesos que viven en tu cabeza."
+        dense
+        align="left"
+        compactMobile
       />
 
       {/* Introducción + síntomas */}
@@ -147,7 +151,7 @@ export default function ProblemSection() {
             no por id porque la lista cambió de tamaño. */}
         <div className="problem-axioms mt-12 md:mt-16 max-w-2xl mx-auto text-center space-y-3 md:space-y-4">
           <p className="font-serif italic text-gold text-base md:text-lg font-normal leading-snug select-text">
-            No te preocupes: el desorden es solo un síntoma natural de tu éxito. Tu agencia creció más rápido que tus procesos. Ahora toca poner la estructura para aguantar el siguiente nivel.
+            “Tranquilo: el desorden es solo un síntoma natural de tu éxito. Tu agencia creció más rápido que tus procesos. Ahora toca poner la estructura para aguantar el siguiente nivel.”
           </p>
         </div>
       </div>

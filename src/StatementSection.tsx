@@ -4,10 +4,24 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 interface StatementSectionProps {
   text: string;
+  /** Tercera linea de copy: blanca y en negrita. Se pinta ENTRE text y
+   *  highlight, y solo la usa el layout "deblur" (el unico con 3 lineas); en los
+   *  demas variantes se ignora a proposito: nadie mas la pasa, no se pierde copy. */
+  emphasis?: string;
   highlight: string;
   id?: string;
   className?: string;
   variant?: "parallax" | "deblur" | "window" | "principle";
+  /** Alineacion del bloque de copy en variant="deblur". "left" usa el ancho
+   *  completo del contenedor: el texto arranca en el mismo borde izquierdo que el
+   *  eyebrow y que el rail de abajo (que estan en max-w-6xl + px-6/md:px-12).
+   *  "center" (default) es el centrado clasico con max-w-5xl mx-auto. */
+  align?: "center" | "left";
+  /** Baja una talla el headline del statement. Para statements de 3 lineas: a
+   *  xl:text-8xl (96px) las 3 lineas dan 7 renglones (~771px) contra ~498px de
+   *  area util en 1440x900: la seccion se estiraba a 1.3 pantallas y el rail de
+   *  abajo se iba debajo del pliegue. Con dense son 4 renglones (~284px). */
+  dense?: boolean;
   eyebrow?: string;
   bottomLeft?: string;
   bottomRight?: string;
@@ -16,6 +30,7 @@ interface StatementSectionProps {
 
 export default function StatementSection({
   text,
+  emphasis,
   highlight,
   id,
   className = "",
@@ -24,6 +39,8 @@ export default function StatementSection({
   bottomLeft,
   bottomRight,
   compactMobile = false,
+  dense = false,
+  align = "center",
 }: StatementSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -213,6 +230,7 @@ export default function StatementSection({
 
   const renderDeblurText = () => {
   const textWords      = text.split(" ");
+  const emphasisWords  = (emphasis ?? "").split(" ").filter(Boolean);
   const highlightWords = highlight.split(" ");
 
   return (
@@ -227,6 +245,18 @@ export default function StatementSection({
           </span>
         ))}
       </span>
+      {emphasisWords.length > 0 && (
+        <span className="block mb-4">
+          {emphasisWords.map((word, i) => (
+            <span
+              key={`b-${i}`}
+              className="deblur-word inline-block mr-[0.25em] will-change-transform text-neutral-100 font-bold"
+            >
+              {word}
+            </span>
+          ))}
+        </span>
+      )}
       <span className="block">
         {highlightWords.map((word, i) => (
           <span
@@ -268,9 +298,19 @@ export default function StatementSection({
           <div className="flex-1 flex items-center justify-center py-16 md:py-20 lg:py-24">
             <h2
               ref={textRef}
-              className={`${compactMobile ? "text-[2.25rem] sm:text-4xl" : "text-[4rem]"} md:text-5xl lg:text-7xl xl:text-8xl font-serif tracking-tight leading-[1.05] font-light w-full`}
+              className={`${
+                compactMobile ? "text-[2.25rem] sm:text-4xl" : "text-[4rem]"
+              } ${dense ? "md:text-[2.75rem] lg:text-5xl xl:text-6xl" : "md:text-5xl lg:text-7xl xl:text-8xl"} font-serif tracking-tight leading-[1.05] font-light w-full`}
             >
-              <div className="flex flex-col items-center justify-center py-4 max-w-5xl mx-auto leading-[1.1]">
+              {/* py-4 y leading-[1.1] son iguales en los dos casos: lo unico que
+                  cambia con align="left" es como se posicionan las lineas. */}
+              <div
+                className={`flex flex-col py-4 leading-[1.1] ${
+                  align === "left"
+                    ? "w-full items-start text-left"
+                    : "max-w-5xl mx-auto items-center justify-center"
+                }`}
+              >
                 {renderDeblurText()}
               </div>
             </h2>

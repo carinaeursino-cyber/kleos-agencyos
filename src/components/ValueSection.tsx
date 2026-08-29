@@ -7,7 +7,8 @@ import { openHowItWorks } from "../lib/howItWorks";
 
 // ─────────────────────────────────────────────────────────────────
 // ValueSection — Propuesta de valor
-// "En KLEOS no organizamos tareas..." + los tres niveles de trabajo.
+// Statement "Agency OS reemplaza el caos por un sistema." + label de seccion +
+// las 3 tarjetas de pillars (data.ts) + el CTA secundario "Ver cómo funciona".
 // ─────────────────────────────────────────────────────────────────
 
 export default function ValueSection() {
@@ -72,7 +73,7 @@ export default function ValueSection() {
 
       <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 pb-24 md:pb-36 relative z-10">
         <p className="pillar-intro-label font-mono text-[9px] md:text-[10px] tracking-[0.3em] text-neutral-500 uppercase text-center mb-10 md:mb-14 select-none">
-          Lo que cambia en tu día a día
+          Así cambia la operación de tu agencia
         </p>
 
         <div className="pillar-grid grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">

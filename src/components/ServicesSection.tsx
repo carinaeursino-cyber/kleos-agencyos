@@ -91,7 +91,7 @@ export default function ServicesSection() {
 
           gsap.fromTo(
             line2,
-            { x: `-${parallaxAmount}` },
+            { x: `-${parallaxAmount}`, },
             {
               x: parallaxAmount,
               ease: "none",
@@ -166,7 +166,7 @@ export default function ServicesSection() {
     <section
       ref={sectionRef}
       id="services-section"
-      className="relative bg-[#050505] text-white border-t border-white/10 overflow-hidden font-sans"
+      className="relative bg-[#050505] text-white border-t border-white/10 overflow-hidden font-sans pb-12 md:pb-20"
     >
       {/* Watermark */}
       <div
@@ -208,15 +208,34 @@ export default function ServicesSection() {
       {/* Stack de tarjetas con pin */}
       <div
         ref={cardsBlockRef}
-        className="relative w-full h-screen bg-[#050505] flex flex-col justify-between py-10 sm:py-16 md:py-20"
+        className="relative w-full h-screen bg-[#050505] flex flex-col justify-between pt-8 sm:pt-10 md:pt-12 pb-10 sm:pb-16 md:pb-20"
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 lg:px-24 w-full select-none">
           <div className="flex items-center gap-3 sm:gap-4 justify-between">
             <span className="font-mono text-[7px] sm:text-[9px] md:text-[10px] tracking-[0.2em] sm:tracking-[0.3em] text-gold uppercase">
-              04 FRENTES · DEL DIAGNÓSTICO A LA ADOPCIÓN
+              EL PROCESO KLEOS
             </span>
             <div className="h-px flex-1 bg-gradient-to-r from-gold/15 to-transparent ml-2 sm:ml-4" />
           </div>
+
+          {/* Titulo principal de la seccion: es la frase que antes cerraba el
+              bloque (la receta es ESA, font-serif italic text-gold font-normal
+              leading-snug, sin inventar nada). Dos diferencias, y las dos por
+              altura: baja a text-base md:text-xl porque aca es un header de rail,
+              no una frase suelta centrada — y porque con text-2xl son 2 renglones
+              y este bloque es h-screen y esta pinneado: las tarjetas tienen
+              min-h-[380px] y si el header les come altura, se salen del marco. Por
+              eso ademas se baja el aire de arriba (py-20 -> pt-12): se le devuelve
+              a ellas lo que toma el titulo. */}
+          <h3 className="mt-4 md:mt-5 font-serif italic text-gold text-base md:text-xl font-normal leading-snug select-text">
+            No empezamos por la herramienta. Primero la operación. Después la herramienta.
+          </h3>
+          {/* Subtitulo: copy secundario del sitio (neutral-500 + font-light),
+              una talla abajo de la que usa el parrafo del intro (text-xs md:text-sm)
+              por el mismo motivo de altura de arriba. */}
+          <p className="mt-2 md:mt-3 max-w-2xl text-neutral-500 font-light text-xs md:text-sm leading-relaxed select-text">
+            4 fases. Del diagnóstico a la adopción. Sin atajos.
+          </p>
         </div>
 
         <div className="relative flex-1 w-full max-w-5xl mx-auto flex items-center justify-center h-[52vh] sm:h-[56vh] my-2 sm:my-4 px-4 sm:px-6 md:px-12">
@@ -293,13 +312,6 @@ export default function ServicesSection() {
             IMPLEMENTACIÓN
           </span>
         </div>
-      </div>
-
-      {/* Refuerzo — frase suelta reciclada del diferenciador */}
-      <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 lg:px-24 pt-6 md:pt-8 pb-12 md:pb-16 text-center">
-        <p className="font-serif italic text-gold text-lg md:text-2xl font-normal leading-snug select-text">
-          No empezamos por la herramienta. Primero la operación. Después la herramienta.
-        </p>
       </div>
     </section>
   );

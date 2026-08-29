@@ -31,22 +31,24 @@ export const symptoms: Symptom[] = [
   { id: "06", text: "Cada cliente o persona nueva que sumas multiplica el caos en vez de repartir el trabajo." },
 ];
 
-// ── Las cuatro brechas ──
-// ── La solución: lo que cambia en el día a día ──
+// ── La solución: las 3 tarjetas de ValueSection ──
+// Titulos reescalados a afirmacion (2026-08-29): "Mas X" comparaba, ahora se
+// afirma. Las descripciones no se tocaron: son la parte creible del bloque.
+// (El label que corona la seccion vive en ValueSection.tsx, no aca.)
 export const pillars: Pillar[] = [
   {
     id: "01",
-    title: "Más claridad",
+    title: "Claridad total",
     description: "Cada persona sabe qué hacer, cuándo y con qué prioridad.",
   },
   {
     id: "02",
-    title: "Más control",
+    title: "Control real",
     description: "Ves el estado de todo sin perseguir a tu equipo.",
   },
   {
     id: "03",
-    title: "Menos dependencia",
+    title: "Cero dependencia",
     description: "Los procesos no viven en la cabeza de una sola persona.",
   },
 ];
@@ -108,8 +110,9 @@ export const consultingServices: ConsultingService[] = [
 export const aosLayers: AosLayer[] = [
   {
     id: "01",
-    title: "Company HQ",
-    description: "La dirección del negocio.",
+    title: "Centro de Mando",
+    description:
+      "Donde se toman las decisiones estratégicas. Visión, métricas y objetivos en un solo lugar.",
     items: [
       "Fundamentos y objetivos.",
       "Roles y responsabilidades.",
@@ -119,8 +122,9 @@ export const aosLayers: AosLayer[] = [
   },
   {
     id: "02",
-    title: "Internal Operations",
-    description: "La gestión interna.",
+    title: "Motor Operativo",
+    description:
+      "Donde tu equipo ejecuta sin perseguir. Tareas, procesos y responsabilidades claras.",
     items: [
       "Planificación y prioridades.",
       "Gestión de proyectos.",
@@ -131,8 +135,9 @@ export const aosLayers: AosLayer[] = [
   },
   {
     id: "03",
-    title: "Client Operations",
-    description: "La operación con clientes.",
+    title: "Gestión de Clientes",
+    description:
+      "Donde el cliente vive sin caos. Onboarding, entregas y comunicación centralizada.",
     items: [
       "Venta y alta de clientes.",
       "Estrategia y producción.",

@@ -10,9 +10,11 @@ import { aosLayers, controlDashboards } from "../data";
 // porque esa tarjeta ya muestra un gráfico de anillo y el ícono duplicaría
 // exactamente el mismo dibujo.
 const layerIcons = {
-  "01": Building2, // Company HQ — la dirección del negocio
-  "02": Settings, // Internal Operations — engranaje / gestión
-  "03": Handshake, // Client Operations — relación con el cliente
+  // El emparejado va por id, no por titulo: si manana cambia el copy, el icono
+  // queda donde tiene que quedar.
+  "01": Building2, // Centro de Mando — el edificio de la direccion
+  "02": Settings, // Motor Operativo — engranaje de la ejecucion
+  "03": Handshake, // Gestion de Clientes — la relacion con el cliente
 };
 
 const dashboardIcons = {
@@ -131,7 +133,7 @@ export default function AosSection() {
             <span className="text-gold italic font-normal">en un solo sistema.</span>
           </h2>
           <p className="mt-5 text-neutral-500 font-light text-sm md:text-base leading-relaxed max-w-xl select-text">
-            Dirección, gestión interna y operación con clientes, en un mismo lugar.
+            Dirección, gestión interna y operación con clientes. Sin saltar entre herramientas.
           </p>
         </div>
 
