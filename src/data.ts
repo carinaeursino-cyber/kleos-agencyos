@@ -17,15 +17,18 @@ import {
 // ─────────────────────────────────────────────────────────────────
 
 // ── El problema: síntomas que un Founder reconoce ──
+// Son 6. Estaban estas dos y se sacaron a pedido (2026-08-29), por si vuelven:
+//   "El equipo pregunta qué hacer porque las prioridades no están claras."
+//   "Tu equipo trabaja, pero tú no tienes visibilidad real de la operación."
+// El id se renumeró a 01-06 para que quede contiguo: solo es la key de React, en
+// la tarjeta se pinta un casillero vacío, no el numero.
 export const symptoms: Symptom[] = [
   { id: "01", text: "Las tareas se asignan por chat y nadie sabe quién es responsable." },
   { id: "02", text: "Todo pasa por ti: decisiones, aprobaciones, destrabes." },
-  { id: "03", text: "El equipo pregunta qué hacer porque las prioridades no están claras." },
-  { id: "04", text: "La información está repartida entre WhatsApp, mails y documentos." },
-  { id: "05", text: "Las piezas se rehacen dos o tres veces por briefs incompletos o revisiones sin límite." },
-  { id: "06", text: "Cada cliente nuevo arranca de cero, sin un proceso definido." },
-  { id: "07", text: "Tu equipo trabaja, pero tú no tienes visibilidad real de la operación." },
-  { id: "08", text: "Cada cliente o persona nueva que sumas multiplica el caos en vez de repartir el trabajo." },
+  { id: "03", text: "La información está repartida entre WhatsApp, mails y documentos." },
+  { id: "04", text: "Las piezas se rehacen dos o tres veces por briefs incompletos o revisiones sin límite." },
+  { id: "05", text: "Cada cliente nuevo arranca de cero, sin un proceso definido." },
+  { id: "06", text: "Cada cliente o persona nueva que sumas multiplica el caos en vez de repartir el trabajo." },
 ];
 
 // ── Las cuatro brechas ──

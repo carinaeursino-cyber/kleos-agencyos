@@ -67,7 +67,7 @@ export default function ValueSection() {
         bottomLeft="KLEOS CONSULTORÍA"
         compactMobile
         text="Agency OS reemplaza el caos por un sistema."
-        highlight="Procesos claros y responsabilidades definidas. Todo en un solo lugar."
+        highlight="Procesos que se ejecutan sin que tengas que recordarlos. Responsabilidades que no hay que perseguir. Todo en un solo lugar."
       />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 pb-24 md:pb-36 relative z-10">

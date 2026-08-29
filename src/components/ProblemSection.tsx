@@ -85,8 +85,8 @@ export default function ProblemSection() {
         variant="deblur"
         eyebrow="El problema"
         bottomLeft="KLEOS CONSULTORÍA"
-        text="Tu equipo no llegó a su límite. El sistema sí."
-        highlight="Porque no puedes escalar con procesos que viven en tu cabeza."
+        text="Tu equipo no llegó a su límite."
+        highlight="Solo necesita un sistema que organice cómo trabaja."
       />
 
       {/* Introducción + síntomas */}
@@ -98,15 +98,20 @@ export default function ProblemSection() {
               por tamaño y peso. font-semibold en vez de bold porque index.css
               carga Inter en 300;400;500;600, así que 700 se sintetizaría mal. */}
           <h3 className="text-neutral-300 font-semibold text-2xl sm:text-[1.75rem] md:text-4xl lg:text-[2.75rem] leading-[1.15] tracking-tight text-balance">
-            Tu gente trabaja bien, pero tu forma de trabajar quedó chica.
+            Tu gente trabaja bien. Pero tu forma de trabajar no escala.
           </h3>
           <p className="text-neutral-500 font-light text-sm md:text-base leading-relaxed">
             ¿Cuántos de estos síntomas reconoces?
           </p>
         </div>
 
-        {/* Grid de síntomas — tarjetas con el dinamismo de las brechas */}
-        <div className="symptom-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+        {/* Grid de síntomas — tarjetas con el dinamismo de las brechas.
+            6 tarjetas = 1 col x 6 en mobile, 2 x 3 en tablet, 3 x 2 en desktop.
+            Con lg:grid-cols-4 la ultima fila quedaba a la mitad (4 + 2); 3 columnas
+            cierra el rectangulo y ademas prolijidad vertical: a 373px de ancho cada
+            texto largo entra en 2 renglones, a 276px eran 3 y las filas se veian
+            desparejas. */}
+        <div className="symptom-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           {symptoms.map((s) => (
             <div
               key={s.id}
@@ -117,7 +122,7 @@ export default function ProblemSection() {
               {/* Barra dorada lateral */}
               <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gold/25 group-hover:bg-gold/50 rounded-l-xl transition-colors duration-500" />
 
-              {/* Casillero vacío — reemplaza la numeración [01]–[08].
+              {/* Casillero vacío — reemplaza la numeración 01–06 de los ids.
                   Es decorativo (sin estado de clic en esta iteración).
                   Se usa el icono de lucide en lugar del carácter "☐" porque
                   U+2610 no está en Inter ni en JetBrains Mono: renderizarlo
@@ -137,10 +142,12 @@ export default function ProblemSection() {
 
         {/* Frases de refuerzo (axiomas de las brechas) — cierre de la sección.
             El axioma "Crecer significa más caos, no más orden." se eliminó:
-            duplicaba en significado a la tarjeta [08], que ahora cierra el tema. */}
+            duplicaba en significado a la última tarjeta ("Cada cliente o persona
+            nueva que sumas…"), que ahora cierra el tema. Se la nombra por texto y
+            no por id porque la lista cambió de tamaño. */}
         <div className="problem-axioms mt-12 md:mt-16 max-w-2xl mx-auto text-center space-y-3 md:space-y-4">
-          <p className="font-serif text-gold text-base md:text-lg font-normal leading-snug select-text">
-            “No te preocupes: el desorden es solo un síntoma natural de tu éxito. Tu agencia creció más rápido que tus procesos. Ahora toca poner la estructura para aguantar el siguiente nivel.”
+          <p className="font-serif italic text-gold text-base md:text-lg font-normal leading-snug select-text">
+            No te preocupes: el desorden es solo un síntoma natural de tu éxito. Tu agencia creció más rápido que tus procesos. Ahora toca poner la estructura para aguantar el siguiente nivel.
           </p>
         </div>
       </div>
