@@ -38,6 +38,9 @@ export interface OnboardingDay {
   id: string;
   day: string;
   title: string;
+  /** Parrafo corto bajo el titulo. Es lo unico que se pinta de la tarjeta:
+   *  `items` queda como dato sin render (ver el comentario en OnboardingSection). */
+  description: string;
   items: string[];
 }
 

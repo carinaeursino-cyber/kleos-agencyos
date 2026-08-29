@@ -94,12 +94,19 @@ export default function OnboardingSection() {
                 </span>
               </div>
 
-              {/* Se quitó la lista de bullets. El h3 era el título con mb-5
-                  separándolo de esos bullets; sin lista, ese margen quedaba
-                  como hueco suelto al pie de la tarjeta, así que se retira. */}
+              {/* Titulo + parrafo, con la receta exacta de las tarjetas de capas
+                  de arriba (el h3 y el <p> de layer.description en AosSection):
+                  mismo h3 y un <p> con
+                  mt-2 + neutral-500 + text-[13px]. Antes de la descripcion la
+                  tarjeta era solo etiqueta + titulo, y el mb-5 del h3 se quito
+                  porque no habia nada debajo; con el parrafo de vuelta, el aire
+                  lo pasa a dar el mt-2 del <p>. */}
               <h3 className="font-serif text-xl md:text-2xl font-light tracking-tight text-neutral-100 group-hover:text-gold transition-colors duration-500 select-text">
                 {day.title}
               </h3>
+              <p className="mt-2 text-neutral-500 text-[13px] font-light leading-relaxed select-text">
+                {day.description}
+              </p>
             </div>
           ))}
         </div>

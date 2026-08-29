@@ -151,22 +151,23 @@ export const controlDashboards: ControlDashboard[] = [
   {
     id: "01",
     title: "Dashboard ejecutivo",
+    // 4 filas, igual que la tarjeta operativa: asi las dos listas cierran al
+    // mismo alto (antes eran 5 y 4 y el borde inferior no coincidía).
     metrics: [
-      "Salud de proyectos.",
-      "Carga de trabajo por rol.",
-      "Entregables críticos.",
-      "Tareas atrasadas.",
-      "Proyectos frenados.",
+      "Estado real de los proyectos (sin tener que preguntar).",
+      "Carga de trabajo y saturación por rol.",
+      "Entregables críticos en riesgo.",
+      "Proyectos frenados antes de que exploten.",
     ],
   },
   {
     id: "02",
     title: "Dashboard operativo",
     metrics: [
-      "Tareas sin asignar.",
-      "Bloqueos y urgencias.",
-      "Capacidad del equipo.",
-      "Avance de producción.",
+      "Tareas bloqueadas y urgencias del día.",
+      "Capacidad real del equipo (sin adivinar).",
+      "Avance de producción en tiempo real.",
+      "Cero tareas huérfanas (todo tiene dueño).",
     ],
   },
 ];
@@ -177,6 +178,8 @@ export const onboardingDays: OnboardingDay[] = [
     id: "01",
     day: "Día 1",
     title: "Accesos e información base",
+    description:
+      "Recopilamos todo lo necesario sin perseguir al cliente: credenciales, contactos clave y documentación inicial. Todo centralizado desde el minuto uno.",
     items: [
       "Datos del cliente y accesos.",
       "Herramientas y canales.",
@@ -187,6 +190,8 @@ export const onboardingDays: OnboardingDay[] = [
     id: "02",
     day: "Día 2",
     title: "Oferta y cliente ideal",
+    description:
+      "Definimos el scope exacto, los entregables y el perfil del cliente final. Sin ambigüedades. Sin suposiciones.",
     items: [
       "Oferta y precios.",
       "Promesas y garantías.",
@@ -197,6 +202,8 @@ export const onboardingDays: OnboardingDay[] = [
     id: "03",
     day: "Día 3",
     title: "Marca y operación",
+    description:
+      "Establecemos los flujos de trabajo, las reglas de comunicación y el kickoff con el equipo. El cliente sabe exactamente qué va a pasar y cuándo.",
     items: [
       "Historia y autoridad.",
       "Marca y tono.",
@@ -207,29 +214,30 @@ export const onboardingDays: OnboardingDay[] = [
 
 // ── Automatización y control ──
 export const automations: AutomationItem[] = [
-  { id: "01", text: "Asignación de tareas según rol." },
-  { id: "02", text: "Fechas límite aplicadas solas." },
-  { id: "03", text: "Alertas por aprobaciones pendientes." },
-  { id: "04", text: "Priorización de tareas urgentes." },
-  { id: "05", text: "Tareas recurrentes." },
-  { id: "06", text: "Notificaciones internas." },
+  { id: "01", text: "Tareas que se asignan solas según el rol." },
+  { id: "02", text: "Plazos y dependencias que se calculan automáticamente." },
+  { id: "03", text: "Alertas instantáneas cuando una aprobación se frena." },
+  { id: "04", text: "Lo urgente salta a la vista de inmediato." },
+  { id: "05", text: "Procesos recurrentes que se disparan sin que nadie lo pida." },
+  { id: "06", text: "Notificaciones que avisan lo importante, sin saturar el chat." },
 ];
 
 // ── Cómo trabajamos ──
 // ── Para quién es / no es ──
-export const fitYes: FitItem[] = [
+
+ export const fitYes: FitItem[] = [
   { id: "01", text: "Tienes clientes activos y un equipo, interno o externo." },
   { id: "02", text: "Tu agencia creció y la operación quedó atrás." },
   { id: "03", text: "Tú concentras demasiadas decisiones." },
-  { id: "04", text: "Quieres trabajar con más previsibilidad." },
+  { id: "04", text: "Quieres dejar de apagar incendios y empezar a prevenirlos." }, // ←
   { id: "05", text: "Buscas implementar, no solo recibir consejos." },
-  { id: "06", text: "Quieres que tu equipo deje de depender de instrucciones constantes." },
+  { id: "06", text: "Quieres que tu equipo sepa qué hacer sin que se lo digas." }, // ←
 ];
 
 export const fitNo: FitItem[] = [
   { id: "01", text: "Buscas una plantilla sin adaptar a tu agencia." },
   { id: "02", text: "No quieres documentar tu forma de trabajar." },
-  { id: "03", text: "Tu equipo no está dispuesto a usar un sistema común." },
+  { id: "03", text: "Crees que el caos es parte de la creatividad." }, // ←
   { id: "04", text: "Todavía no tienes un servicio definido." },
 ];
 
@@ -237,12 +245,12 @@ export const fitNo: FitItem[] = [
 // Son 6 a proposito: AboutSection los pinta en grid-cols-1 sm:grid-cols-2,
 // asi que con 5 el ultimo chip quedaba solo y hueco en la tercera fila.
 export const aboutFocus: string[] = [
-  "Gestión de proyectos.",
-  "Diseño de procesos.",
-  "Coordinación de equipos.",
-  "Transformación digital.",
-  "Mejora continua.",
-  "Arquitectura de sistemas.",
+  "Procesos que se ejecutan sin que tengas que recordarlos.",
+  "Un sistema que escala contigo, no contra ti.",
+  "Equipos que saben qué hacer sin que se lo digas.",
+  "Visibilidad real de tu operación, no suposiciones.",
+  "Menos tiempo apagando incendios, más tiempo creciendo.",
+  "Una operación que funciona incluso cuando tú no estás.",
 ];
 
 // ── Diferenciador ──
@@ -252,31 +260,31 @@ export const faqItems: FaqItem[] = [
     id: "01",
     question: "¿Esto es solo una configuración de ClickUp?",
     answer:
-      "No. Agency OS es un sistema operativo diseñado alrededor de tu agencia: procesos, roles y responsabilidades. ClickUp es la herramienta donde se implementa.",
+      "No. ClickUp es la herramienta. Agency OS es la arquitectura operativa que se construye sobre ella. La diferencia es la misma que hay entre comprar un Ferrari y saber conducir en una Fórmula 1. El motor es el mismo, pero el sistema, la estrategia y la forma de usarlo son lo que realmente transforma tu operación. Nosotros no te entregamos un tablero bonito: te entregamos un sistema que tu equipo puede ejecutar sin que tú tengas que recordárselo.",
   },
   {
     id: "02",
     question: "¿Van a adaptar el sistema a nuestra agencia?",
     answer:
-      "Sí. No entregamos plantillas genéricas. El sistema se diseña sobre tus procesos, tu equipo y tus servicios.",
+      "Sí. 100%. No existe una plantilla genérica que funcione para todas las agencias. Antes de tocar una sola herramienta, hacemos un diagnóstico operativo profundo de cómo trabaja tu equipo hoy: cómo entran los clientes, cómo se asignan las tareas, dónde se pierde tiempo y dónde se rompen los procesos. Sobre ese mapa real construimos tu Agency OS. Por eso no vendemos plantillas: vendemos arquitectura a medida.",
   },
   {
     id: "03",
     question: "¿Esto reemplaza a un Project Manager?",
     answer:
-      "No. Agency OS estructura la operación y reduce el caos, pero no sustituye el criterio y el liderazgo de una persona. Es ideal si tu agencia todavía no está lista para contratar un PM full-time, o si quieres ordenar tu operación antes de hacerlo.",
+      "No. Lo potencia. Agency OS no sustituye a las personas. Elimina las tareas repetitivas, las asignaciones manuales y el seguimiento constante que consumen el tiempo de tu PM. Así, tu Project Manager deja de ser un 'perseguidor de tareas' y se convierte en lo que debería ser: un gestor estratégico que asegura que los proyectos se entreguen bien y a tiempo. Menos ruido operativo, más criterio humano.",
   },
   {
     id: "04",
     question: "¿Cuánto tiempo lleva implementar Agency OS?",
     answer:
-      "Depende del tamaño de tu agencia y la complejidad de tus servicios. Después del diagnóstico definimos juntos un alcance y un cronograma realista.",
+      "Entre 4 y 6 semanas, dependiendo de la complejidad de tu operación y el tamaño de tu equipo. No es un proyecto de meses que paraliza tu agencia. Es un proceso estructurado en 4 fases (diagnóstico, diseño, implementación y adopción) donde tu equipo sigue operando mientras construimos el sistema. Al final de ese periodo, tu agencia tiene una forma de trabajar clara, documentada y funcionando.",
   },
   {
     id: "05",
     question: "¿Qué ocurre después de la implementación?",
     answer:
-      "Te dejamos el sistema operando, con tu equipo capacitado y guías de uso. Si quieres gestión continua o PMO externa, se cotiza por separado.",
+      "Te dejamos operando, no abandonados. La implementación incluye capacitación completa para tu equipo, guías de uso y un acompañamiento inicial para asegurar la adopción real del sistema. Una vez que el sistema está rodando, tú tienes el control total: puedes escalar, ajustar y crecer sin depender de nosotros. Si en el futuro necesitas ajustar algo por crecimiento o cambios en tu operación, podemos seguir acompañándote, pero el objetivo es que el sistema sea tuyo y funcione con o sin nosotros.",
   },
 ];
 

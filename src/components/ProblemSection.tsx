@@ -144,14 +144,19 @@ export default function ProblemSection() {
           ))}
         </div>
 
-        {/* Frases de refuerzo (axiomas de las brechas) — cierre de la sección.
-            El axioma "Crecer significa más caos, no más orden." se eliminó:
-            duplicaba en significado a la última tarjeta ("Cada cliente o persona
-            nueva que sumas…"), que ahora cierra el tema. Se la nombra por texto y
-            no por id porque la lista cambió de tamaño. */}
+        {/* Una sola frase de cierre (era un bloque de axiomas; el axioma "Crecer
+            significa más caos, no más orden." se eliminó porque duplicaba a la
+            ultima tarjeta del grid). */}
         <div className="problem-axioms mt-12 md:mt-16 max-w-2xl mx-auto text-center space-y-3 md:space-y-4">
+          {/* Cierre de la seccion, en dorado y cursiva (la receta del sitio para
+              la frase de remate). Antes venia entre comillas tipograficas “ ”
+              porque era una cita suelta; ahora habla en segunda persona
+              ("No te preocupes"), asi que las comillas se sacaron: envolver en
+              comillas algo que le decis al lector lo convierte en refran. */}
           <p className="font-serif italic text-gold text-base md:text-lg font-normal leading-snug select-text">
-            “Tranquilo: el desorden es solo un síntoma natural de tu éxito. Tu agencia creció más rápido que tus procesos. Ahora toca poner la estructura para aguantar el siguiente nivel.”
+            No te preocupes. El desorden es solo un síntoma natural de tu éxito. Tu
+            agencia creció más rápido que tus procesos y ahora solo toca implementar la
+            estructura para que puedas escalar al siguiente nivel.
           </p>
         </div>
       </div>

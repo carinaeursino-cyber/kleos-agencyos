@@ -182,9 +182,9 @@ function HomePage() {
               eyebrow="Revisión operativa"
               title="Si todo depende de ti, todavía no tienes"
               highlight="una operación escalable."
-              intro="Identificamos dónde se produce la fricción y qué cambiar primero."
-              buttonLabel="Quiero revisar mi operación"
-              smallText="Primera conversación exploratoria, sin compromiso."
+              intro="Analizamos tu operación actual para detectar las fugas de tiempo y margen. Te damos un veredicto claro y un plan de acción."
+              buttonLabel="Agenda tu sesión exploratoria"
+              smallText="Una conversación directa sobre tu operación."
               action="contact"
             />
 

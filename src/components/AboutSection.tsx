@@ -136,15 +136,35 @@ export default function AboutSection() {
 
             {/* Texto */}
             <div className="lg:col-span-8">
-              <p className="text-neutral-300 font-light text-base md:text-lg leading-relaxed select-text">
-                Más de{" "}
-                <span className="text-gold font-normal">13 años</span> ordenando
-                operaciones, proyectos y equipos remotos para que dejen de improvisar
-                y empiecen a trabajar con claridad.
-              </p>
+              {/* Bio en 3 parrafos. El envoltorio con space-y-4 es la receta de
+                  parrafos apilados del sitio (la bio de /vsl usa la misma); cada
+                  <p> conserva literalmente la clase que ya tenia este parrafo,
+                  y el gold sobre "13 anos" se mantiene: era el unico acento de
+                  la bio y el numero es el argumento de autoridad. */}
+              <div className="space-y-4">
+                <p className="text-neutral-300 font-light text-base md:text-lg leading-relaxed select-text">
+                  Durante{" "}
+                  <span className="text-gold font-normal">13 años</span> gestioné
+                  operaciones en startups y agencias que crecían rápido. Vi equipos
+                  talentosos quemarse por falta de claridad. Vi CEOs brillantes
+                  atrapados en el día a día, sin poder ver el bosque completo.
+                </p>
+                <p className="text-neutral-300 font-light text-base md:text-lg leading-relaxed select-text">
+                  El patrón era siempre el mismo: la operación no acompañaba el ritmo
+                  de la facturación. No era falta de talento. Era falta de sistema.
+                </p>
+                <p className="text-neutral-300 font-light text-base md:text-lg leading-relaxed select-text">
+                  Creé Agency OS para cerrar esa brecha. Sin teoría. Sin promesas
+                  vacías. Solo implementación pura de una arquitectura operativa que
+                  te permita delegar sin miedo, escalar sin caos y recuperar el
+                  control de tu agencia.
+                </p>
+              </div>
 
+              {/* La etiqueta se guarda en su caja natural porque la clase ya trae
+                  `uppercase`: en pantalla sale en mayusculas, igual que antes. */}
               <p className="mt-5 font-mono text-[9px] tracking-[0.25em] text-neutral-500 uppercase select-none">
-                Mi enfoque combina
+                Lo que obtienes al trabajar conmigo:
               </p>
 
               <div className="about-focus-grid mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5">

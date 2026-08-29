@@ -73,7 +73,7 @@ export default function AutomationSection() {
             <span className="text-gold italic font-normal">Más visibilidad.</span>
           </h2>
           <p className="mt-5 text-neutral-500 font-light text-sm md:text-base leading-relaxed max-w-xl select-text">
-            Lo que se repite, se automatiza:
+            El sistema se encarga de lo repetitivo. Tú te encargas de lo estratégico.
           </p>
         </div>
 
@@ -84,7 +84,10 @@ export default function AutomationSection() {
               key={a.id}
               className="autom-card group relative bg-[#0B0B0C] border border-white/10 hover:border-gold/30 rounded-xl px-5 py-4 flex items-start gap-3 transition-colors duration-300"
             >
-              {/* Marcador minimo en lugar del numero: una linea dorada corta.
+              {/* Marcador minimo en lugar del numero: una linea dorada corta (el
+                  guion que se ve NO es un caracter del texto: es un <span> con
+                  h-px w-3 bg-gold/50, asi que cambiar el copy de las tarjetas no
+                  lo toca ni lo desalinea).
                   mt-[9px] = centro vertical de una linea de texto de 13px con
                   leading-snug (~18px), para que el guion quede a media altura.
                   gap-3 de la tarjeta sigue intacto, asi que el texto no se mueve. */}
