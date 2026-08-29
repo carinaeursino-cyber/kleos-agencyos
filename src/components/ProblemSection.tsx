@@ -85,8 +85,8 @@ export default function ProblemSection() {
         variant="deblur"
         eyebrow="El problema"
         bottomLeft="KLEOS CONSULTORÍA"
-        text="Tu equipo no llegó a su límite."
-        highlight="Solo necesita un sistema que organice cómo trabaja."
+        text="Tu equipo no llegó a su límite. El sistema sí."
+        highlight="Porque no puedes escalar con procesos que viven en tu cabeza."
       />
 
       {/* Introducción + síntomas */}

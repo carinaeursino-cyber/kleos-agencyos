@@ -2,6 +2,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import GoldenSpiral from "./GoldenSpiral";
 import { openHowItWorks } from "../../lib/howItWorks";
+import { AUDIT_ROUTE } from "../../lib/audit";
+import { Link } from "react-router-dom";
 import LambdaCanvas from "../../LambdaCanvas";
 
 // ─────────────────────────────────────────────────────────────────
@@ -16,16 +18,24 @@ import LambdaCanvas from "../../LambdaCanvas";
 // Click en cualquier parte = saltar la intro.
 // ─────────────────────────────────────────────────────────────────
 
+
 const ACT_DURATIONS = {
   spiral: 3200,
   lambda: 4800,
 };
 
 // ─────────────────────────────────────────────────────────────────
-// El boton "Mira cómo funciona" usa openHowItWorks() (src/lib/howItWorks.ts):
-// hace scroll suave a Implementacion, y si el mini VSL llega a publicarse
-// —escribiendo su URL en VSL_URL ahi— pasa a abrir el video sin tocar
-// este archivo.
+// Copy final del hero (aprobado 2026-08-29). Dos CTAs:
+//
+//   CTA1 "Audita tu operacion en 3 min" -> el formulario de auditoria.
+//     La URL vive en AUDIT_FORM_URL aca abajo. Mientras sea null el boton
+//     cae en BOOKING_URL (la agenda de Cal.com) para que el hero nunca pueda
+//     quedar con un enlace roto: el mismo criterio que openHowItWorks() usa
+//     con /vsl.
+//   CTA2 "Ver el sistema en accion" -> openHowItWorks()
+//     (src/lib/howItWorks.ts), que hoy navega a la landing /vsl y, si esa
+//     pagina se diera de baja vaciando VSL_PAGE, vuelve a hacer scroll suave
+//     a la seccion Implementacion.
 // ─────────────────────────────────────────────────────────────────
 
 interface ConsultingHeroProps {
@@ -96,16 +106,25 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
             Agency OS · Sistema operativo para agencias de marketing
           </motion.p>
 
-          {/* Titular */}
+          {/* Titular — dos lineas y el corte es del copy, no del viewport.
+              El escalon xl:text-7xl (72px) que habia se saco: el copy nuevo son
+              58 + 90 caracteres, y a 72px en max-w-4xl dan ~28 caracteres por
+              linea, o sea 6 renglones de 80px = casi 500px de puro titular y
+              los botones se iban abajo del pliegue. Tope lg:text-6xl (60px)
+              sobre max-w-4xl md:max-w-5xl (896/1024px): linea 1 = 2 renglones,
+              linea 2 = 3. */}
           <motion.h1
             variants={{ hidden: { opacity: 0, y: 26 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif font-light text-neutral-100 leading-[1.12] tracking-wide text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-4xl"
+            className="font-serif font-light text-neutral-100 leading-[1.12] tracking-wide text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-4xl md:max-w-5xl"
           >
-            Tu agencia creció pero el caos también.
+            Tu agencia no necesita más mindset. Necesita un sistema.
             <br />
+            {/* <br /> + block: el corte entre las dos frases es del copy, no
+                del ancho de la ventana. La segunda linea lleva el enfasis que
+                pide la marca: gold + italica, igual que antes. */}
             <span className="text-gold italic font-normal block mt-3 md:mt-4">
-              Facturas más, duermes menos, controlas menos.
+              Porque de nada sirve facturar como las grandes si operas como un freelancer con empleados.
             </span>
           </motion.h1>
 
@@ -116,31 +135,73 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
             className="w-24 md:w-32 h-[1px] bg-gold/20 my-7 md:my-9"
           />
 
-          {/* Subtitulo — una sola oracion. Reemplaza a la frase puente y a los
-              dos parrafos de apoyo: la idea completa entra en una linea y el
-              boton queda mucho mas arriba del pliegue.
-              text-base md:text-lg (16/18px) y max-w-2xl: a 18px esa medida da
-              ~2 lineas en desktop y ~3 en mobile, que es el corte cómodo
-              para leer sin que el parrafo se vea angosto.
-              text-balance evita la palabra huerfana en la ultima linea. */}
+          {/* Subtitulo — dos oraciones: la objecion ("no necesitas mas
+              herramientas") y la respuesta con el nombre del sistema. Mismo
+              tamano que antes (16/18px) pero max-w-3xl (768px) en vez de
+              max-w-2xl: con 214 caracteres, a 672px eran 5 renglones y el
+              parrafo peleaba con el titular por la pantalla. text-balance
+              sigue evitando la palabra huerfana. */}
           <motion.p
             variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="text-neutral-300 font-light text-base md:text-lg leading-relaxed max-w-2xl text-balance select-text"
+            className="text-neutral-300 font-light text-base md:text-lg leading-relaxed max-w-2xl md:max-w-3xl text-balance select-text"
           >
-            En Agency OS organizamos tus procesos, responsabilidades y prioridades en ClickUp para que tu agencia funcione sin depender de ti.
+            <p>
+  Y no, no es por falta de herramientas, es por falta de un sistema que ponga a trabajar a tu equipo sin que tengas que perseguirlos. 
+  <strong> Kleos Agency OS es la arquitectura operativa que te falta.</strong>
+</p>
           </motion.p>
 
-          {/* CTA — mismo comportamiento que el boton de ValueSection */}
-          <motion.button
-            type="button"
+          {/* CTAs — dos columnas desde sm (640px): boton + microcopy propio en
+              cada una, para que el texto chico no flote suelto debajo de los
+              dos botones. En mobile se apilan y los botones pasan a ancho
+              completo (w-full / sm:w-auto), la misma regla de /vsl. Todo el
+              bloque es UN solo item del stagger, como era el boton anterior. */}
+          <motion.div
             variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            onClick={openHowItWorks}
-            className="cursor-hover mt-11 md:mt-14 inline-flex items-center gap-3 bg-gold hover:bg-gold-hover text-[#050505] px-8 md:px-10 py-4 rounded-full font-mono text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-bold transition-colors duration-300 shadow-[0_0_40px_rgba(197,160,89,0.15)]"
+            className="mt-11 md:mt-14 grid w-full max-w-3xl grid-cols-1 items-start gap-x-6 gap-y-7 sm:grid-cols-2"
           >
-            Mira cómo funciona
-          </motion.button>
+                        {/* CTA1 — dorado, el destino nuevo */}
+            <div className="flex flex-col items-center">
+              {/* Navegacion interna (no <a target=_blank>): el protocolo es una
+                  ruta del sitio, definida una sola vez en src/lib/audit.ts como
+                  AUDIT_ROUTE, que es la misma que monto el Route en App.tsx. Si
+                  el cuestionario se mudara a Tally/Typeform, esto vuelve a ser
+                  un <a href={URL} target="_blank" rel="noopener noreferrer">. */}
+              <Link
+                to={AUDIT_ROUTE}
+                className="cursor-hover inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-gold px-8 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-[#050505] shadow-[0_0_40px_rgba(197,160,89,0.15)] transition-colors duration-300 hover:bg-gold-hover md:px-10 md:text-[11px]"
+              >
+                Audita tu operación en 3 min
+              </Link>
+              <p className="mt-3 max-w-[280px] text-center text-neutral-500 font-light text-xs leading-relaxed select-text">
+                5 preguntas. Sin compromiso. Descubre exactamente dónde estás perdiendo margen y tiempo.
+              </p>
+            </div>
+
+            {/* CTA2 — outline, mismo ghost del header y de /vsl */}
+            <div className="flex flex-col items-center">
+              <button
+                type="button"
+                onClick={openHowItWorks}
+                className="cursor-hover group inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-gold/30 px-8 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-gold transition-all duration-300 hover:border-gold hover:bg-gold/5 md:px-10 md:text-[11px]"
+              >
+                Ver el sistema en acción
+                <svg
+                  className="h-3 w-3 shrink-0 opacity-60 transition-transform duration-300 group-hover:translate-x-0.5"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <p className="mt-3 max-w-[280px] text-center text-neutral-500 font-light text-xs leading-relaxed select-text">
+                Mira cómo funciona la arquitectura KLEOS. Sin compromiso.
+              </p>
+            </div>
+          </motion.div>
 
           {/* Texto secundario */}
           <motion.p

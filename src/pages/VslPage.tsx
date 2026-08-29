@@ -3,7 +3,10 @@ import { Check, Play, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { fitNo, fitYes } from "../data";
+// El enlace de agendamiento vive en src/lib/booking.ts, que es el mismo que
+// usa el CTA del header del sitio. Se lo importa como CAL_URL para no tocar los
+// tres botones de esta pagina.
+import { BOOKING_URL as CAL_URL } from "../lib/booking";
 
 // ─────────────────────────────────────────────────────────────────
 // VslPage — landing del "Mira cómo funciona"
@@ -16,19 +19,16 @@ import { fitNo, fitYes } from "../data";
 // font-mono + font-serif del resto de las secciones.
 // ─────────────────────────────────────────────────────────────────
 
-// ⚠️ LOS UNICOS DOS TEXTOS QUE CONVIENE REVISAR ANTES DE PUBLICAR.
-// La agenda real (cal.com/carina-ursino/sesion-diagnostico, verificada el
-// 2026-08-28) dice "Diagnóstico Operativo | Agency OS" y duracion 30m.
-// El copy pedido dice "Auditoría Operativa" y 15 min. Se deja textual como
-// se pidio; para alinear la promesa con la agenda real, cambiar estas dos
-// lineas y nada mas (se usan en 3 lugares).
-const CTA_LABEL = "Agenda tu Auditoría Operativa de 15 min";
+// El boton no menciona duracion: la agenda real
+// (cal.com/carina-ursino/sesion-diagnostico, verificada 2026-08-28) es el
+// evento "Diagnóstico Operativo" de 30 min, y prometer 15 obligaba a defender
+// el numero en la llamada. Sin numero, la promesa se sostiene sola.
+// Son 3 los lugares que consumen CTA_LABEL (arriba del video, abajo del video
+// y el CTA final): cambiar la constante alcanza para los tres.
+const CTA_LABEL = "Agenda tu Auditoría Operativa";
 const HEADER_LABEL = "Agendar auditoría";
-
-// El enlace de agendamiento vive en src/lib/booking.ts, que es el mismo que
-// usa el CTA del header del sitio. Se lo importa como CAL_URL para no tocar los
-// tres botones de esta pagina.
-import { BOOKING_URL as CAL_URL } from "../lib/booking";
+// El microcopy del boton nuevo, el que va arriba del video.
+const CTA_MICRO = "Una conversación directa sobre tu operación.";
 
 // ── El embed ──
 // Mientras sea null se pinta el placeholder: no hay iframe activo en la
@@ -51,7 +51,7 @@ const carinaImages = import.meta.glob("../assets/images/*.{png,jpg,jpeg}", {
 }) as Record<string, string>;
 
 const carinaPhoto = Object.entries(carinaImages).find(([path]) =>
-  path.toLowerCase().includes("carina")
+  path.toLowerCase().includes("foto_carina_hero")
 )?.[1];
 
 // Los 6 enfoques de esta landing NO son los del home (aboutFocus en data.ts):
@@ -65,35 +65,24 @@ const vslFocus = [
   "Reducción de cuellos de botella.",
 ];
 
-// Copy propio de esta pagina (lo demas sale de data.ts para que las dos
-// paginas no se desincronicen).
-const auditPoints = [
-  "Revisamos cómo está organizada tu operación hoy.",
-  "Identificamos dónde se pierde tiempo, dinero o control.",
-  "Te decimos si Agency OS es lo que tu agencia necesita — o no.",
-  "Sin pitch de venta genérico: hablamos de tu caso puntual.",
+// Las 4 + 4 de "¿Es esto para ti?". Son texto PROPIO de esta pagina: antes las
+// dos columnas se filtraban de fitYes/fitNo (data.ts) para que el home y el VSL
+// no se desincronizaran, y esa ventaja se pierde a cambio de poder decir otra
+// cosa aca. Si manana queres volver a compartirlas, hay que alinear los dos
+// textos en data.ts. El `id` es solo la key de React: no se pinta.
+const fitYesVsl = [
+  { id: "vsl-si-01", text: "Tienes clientes activos y un equipo (interno o externo)." },
+  { id: "vsl-si-02", text: "Tu agencia creció, pero la operación quedó atrás." },
+  { id: "vsl-si-03", text: "Buscas implementar un sistema, no solo recibir consejos." },
+  { id: "vsl-si-04", text: "Quieres saber exactamente dónde estás perdiendo margen y tiempo." },
 ];
 
-// Las viñetas que el home ya tiene, filtradas por id de data.ts: son texto
-// byte a byte igual, asi que si manana se edita la seccion "Para quién es"
-// del home, esta pagina sigue alineada. El tercer "no es para ti" es propio
-// de esta landing y se suma abajo, aparte.
-const only = (items: { id: string; text: string }[], ids: string[]) =>
-  ids.map((id) => items.find((i) => i.id === id)).filter(Boolean) as {
-    id: string;
-    text: string;
-  }[];
-const vslYes = only(fitYes, ["01", "02", "05"]);
-
-// El 3er "no es para ti" NO esta en data.ts: ahi fitNo tiene 4 items y los
-// consume el home. Agregandolo alla, la tarjeta "Para quien es" del home
-// pasaria de 4 a 5 lineas. Por eso se declara aca y se pega detras de las
-// dos compartidas; el id es solo la key de React.
-const vslNoExtra = {
-  id: "vsl-05",
-  text: "Quieres resolver el caos sin involucrar a tu equipo en la adopción.",
-};
-const vslNo = [...only(fitNo, ["01", "04"]), vslNoExtra];
+const fitNoVsl = [
+  { id: "vsl-no-01", text: "Buscas una plantilla genérica sin adaptar a tu agencia." },
+  { id: "vsl-no-02", text: "Todavía no tienes un servicio definido." },
+  { id: "vsl-no-03", text: "Quieres resolver el caos sin involucrar a tu equipo en la adopción." },
+  { id: "vsl-no-04", text: 'Esperas una llamada de "descubrimiento" genérica con teoría de manual.' },
+];
 
 interface VslPageProps {
   videoUrl?: string | null;
@@ -193,15 +182,44 @@ export default function VslPage({ videoUrl = VSL_EMBED_URL }: VslPageProps = {})
           <p className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] text-gold uppercase mb-4 select-none">
             DIAGNÓSTICO OPERATIVO GRATUITO
           </p>
-          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-light tracking-tight leading-[1.02] text-neutral-100 select-text">
-            Cómo pasar del caos operativo a una agencia que escala{" "}
+          {/* Cuatro frases en tres renglones: cada una de las dos primeras tiene
+              renglon propio y el par dorado va junto, porque se lee de una. El
+              quiebre despues de "memoria." es donde cambia el tiempo del
+              argumento. Se saca lg:text-7xl —el home lo tiene y aca el titular
+              es 2x mas largo—:
+              a 72px son ~5 lineas (~365px) y el video y el boton se iban debajo
+              del pliegue. Cap en 60px, la misma talla del h1 del hero. */}
+          <h1 className="font-serif text-4xl md:text-6xl font-light tracking-tight leading-[1.06] text-neutral-100 select-text">
+            Tu agencia no depende de ti.
+            <br />
+            Depende de tu memoria.
+            <br />
             <span className="text-gold italic font-normal">
-              sin depender de ti.
+              Y eso no es escalable. En pocos minutos, te muestro por qué.
             </span>
           </h1>
-          <p className="mt-4 md:mt-5 text-neutral-400 font-light text-sm md:text-base leading-relaxed max-w-xl mx-auto select-text">
-            90 segundos para ver cómo se ve el sistema por dentro.
+          <p className="mt-5 md:mt-6 text-neutral-400 font-light text-sm md:text-[15px] leading-relaxed max-w-2xl md:max-w-3xl mx-auto text-balance select-text">
+            Lo que estás a punto de ver no es un tutorial. Es una demostración de cómo
+            operan las agencias que facturan sin caos.
           </p>
+
+          {/* CTA arriba del video: hay visitantes que no lo van a ver y hay que
+              darles salida antes, no despues. Misma receta del boton dorado del
+              hero (mismo radio, mismo glow, mismo microcopy debajo) y full-width
+              en mobile. */}
+          <div className="mt-9 md:mt-11 flex flex-col items-center">
+            <a
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-hover inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-gold px-9 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-[#050505] shadow-[0_0_50px_rgba(197,160,89,0.2)] transition-colors duration-300 hover:bg-gold-hover md:px-12 md:text-[11px]"
+            >
+              {CTA_LABEL}
+            </a>
+            <p className="mt-3 max-w-[280px] text-center text-neutral-500 font-light text-xs leading-relaxed select-text">
+              {CTA_MICRO}
+            </p>
+          </div>
         </div>
 
         {/* El video manda: max-w-3xl (768px) para que a 16:9 sean ~432px de
@@ -248,92 +266,83 @@ export default function VslPage({ videoUrl = VSL_EMBED_URL }: VslPageProps = {})
             >
               {CTA_LABEL}
             </a>
-            {/* Microtexto: la misma receta del que esta bajo el CTA del hero */}
-            <p className="mt-5 text-neutral-500 font-light text-xs md:text-[13px] leading-relaxed select-text">
-              Primera conversación exploratoria.
+            {/* Microtexto: la receta del hero (mt-3 + max-w-[280px] + text-xs).
+                Los TRES microcopy de esta pagina usan exactamente esas clases,
+                para que el ancho de linea no cambie segun donde este el boton. */}
+            <p className="mt-3 max-w-[280px] text-center text-neutral-500 font-light text-xs leading-relaxed select-text">
+              Primera conversación exploratoria, sin compromiso.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ── Sobre la auditoria ── */}
+      {/* ── ¿Es esto para ti? — seccion fusionada ──
+          Antes eran dos secciones: "Sobre la auditoria" (que enumeraba de que se
+          habla) y el fit de dos columnas. Ahora es una sola con el filtro al
+          frente, que es lo que califica en una landing de video. Los 4 puntos de
+          "sobre la auditoria" salen del aire a proposito: el titulo de esta
+          seccion ya dice lo mismo. ── */}
       <section className="relative z-10 border-t border-white/10 px-5 sm:px-6 md:px-12 py-20 md:py-28">
         <div className="mx-auto max-w-4xl">
           <p className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] text-gold uppercase mb-4 select-none">
-            Sobre la auditoría
+            ¿Es esto para ti?
           </p>
           <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.05] text-neutral-100 select-text">
             Una conversación directa sobre tu{" "}
             <span className="text-gold italic font-normal">operación.</span>
           </h2>
 
-          <ul className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2">
-            {auditPoints.map((point) => (
-              <li
-                key={point}
-                className="flex items-start gap-2.5 rounded-lg border border-white/[0.07] bg-[#070708] px-4 py-3"
-              >
-                <span className="w-1 h-1 rounded-full bg-gold/80 mt-[8px] shrink-0" />
-                <span className="text-neutral-300 text-[13px] font-light leading-snug select-text">
-                  {point}
+          <div className="mt-8 grid grid-cols-1 items-start gap-4 sm:mt-10 md:grid-cols-2 md:gap-6">
+            {/* Columna dorada: el borde gold/20 y el filete superior solo aca,
+                la misma marca de FitSection en el home. */}
+            <div className="relative rounded-2xl border border-gold/20 bg-[#0B0B0C] p-7 md:p-9">
+              <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
+
+              <div className="mb-6 flex items-center gap-3 border-b border-white/5 pb-4 select-none">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-gold">
+                  Sí, es para ti si:
                 </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+              </div>
 
-      {/* ── Es para ti / No es para ti: las dos cards de FitSection, con su
-          borde dorado y su filete solo en la columna afirmativa ── */}
-      <section className="relative z-10 border-t border-white/10 px-5 sm:px-6 md:px-12 py-20 md:py-28">
-        <div className="mx-auto grid max-w-4xl grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-6">
-          <div className="relative rounded-2xl border border-gold/20 bg-[#0B0B0C] p-7 md:p-9">
-            <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
-
-            <div className="mb-6 flex items-center gap-3 border-b border-white/5 pb-4 select-none">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-gold">
-                Es para ti si:
-              </span>
+              <ul className="space-y-3">
+                {fitYesVsl.map((item) => (
+                  <li key={item.id} className="flex items-start gap-3">
+                    <span className="mt-[1px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-gold/10">
+                      <Check className="h-3 w-3 text-gold" />
+                    </span>
+                    <span className="text-neutral-300 text-sm font-light leading-relaxed select-text">
+                      {item.text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <ul className="space-y-3">
-              {vslYes.map((item) => (
-                <li key={item.id} className="flex items-start gap-3">
-                  <span className="mt-[1px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-gold/10">
-                    <Check className="h-3 w-3 text-gold" />
-                  </span>
-                  <span className="text-neutral-300 text-sm font-light leading-relaxed select-text">
-                    {item.text}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div className="relative rounded-2xl border border-white/10 bg-[#0B0B0C] p-7 md:p-9">
+              <div className="mb-6 flex items-center gap-3 border-b border-white/5 pb-4 select-none">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                  No, no es para ti si:
+                </span>
+              </div>
 
-          <div className="relative rounded-2xl border border-white/10 bg-[#0B0B0C] p-7 md:p-9">
-            <div className="mb-6 flex items-center gap-3 border-b border-white/5 pb-4 select-none">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-500">
-                No es para ti si:
-              </span>
+              <ul className="space-y-3">
+                {fitNoVsl.map((item) => (
+                  <li key={item.id} className="flex items-start gap-3">
+                    <span className="mt-[1px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
+                      <X className="h-3 w-3 text-neutral-500" />
+                    </span>
+                    <span className="text-neutral-500 text-sm font-light leading-relaxed select-text">
+                      {item.text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
-
-            <ul className="space-y-3">
-              {vslNo.map((item) => (
-                <li key={item.id} className="flex items-start gap-3">
-                  <span className="mt-[1px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                    <X className="h-3 w-3 text-neutral-500" />
-                  </span>
-                  <span className="text-neutral-500 text-sm font-light leading-relaxed select-text">
-                    {item.text}
-                  </span>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </section>
 
-            {/* ── Sobre Carina: bloque centrado (avatar con anillo dorado, nombre,
+      {/* ── Sobre Carina: bloque centrado (avatar con anillo dorado, nombre,
           una linea de autoridad, bio larga y los 6 enfoques bajo un filete).
           Es TU maquetacion de esta ronda, no la bio card del home: el avatar
           es mas chico (112/128px vs 144/176), el anillo es un gradiente en vez
@@ -380,17 +389,22 @@ export default function VslPage({ videoUrl = VSL_EMBED_URL }: VslPageProps = {})
                 </p>
               </div>
 
-              {/* Bio centrada */}
-              <p className="max-w-2xl text-base md:text-lg leading-relaxed text-neutral-300 font-light select-text">
-                Durante más de <span className="text-gold font-medium">13 años</span>{" "}
-                me he dedicado a la gestión de proyectos como PM y COO en agencias,
-                startups y equipos digitales. Tras ver cómo la falta de procesos
-                afecta una y otra vez a tantas empresas, diseñé una metodología
-                propia. Mi trabajo no es dar recomendaciones teóricas, sino
-                implementar la arquitectura exacta que tu agencia necesita en
-                ClickUp para que entregues a tiempo, delegues con tranquilidad y
-                dejes de ser el cuello de botella de tu propio negocio.
-              </p>
+              {/* Bio centrada. Dos parrafos: el primero describe el patron que
+                  vio, el segundo que vino a resolverlo. Sin marca de herramienta
+                  en el texto (la bio del home todavia dice "en ClickUp"; aca no). */}
+              <div className="mx-auto max-w-2xl space-y-4">
+                <p className="text-base md:text-lg leading-relaxed text-neutral-300 font-light select-text">
+                  Durante más de <span className="text-gold font-medium">13 años</span>{" "}
+                  gestioné proyectos como PM y COO en agencias. Vi el mismo patrón una y
+                  otra vez: agencias que facturan bien pero operan mal. No por falta de
+                  talento, sino por falta de sistema.
+                </p>
+                <p className="text-base md:text-lg leading-relaxed text-neutral-300 font-light select-text">
+                  Diseñé Agency OS no para darte teoría, sino para implementar la
+                  arquitectura operativa que tu agencia necesita hoy. Sin dependencias. Sin
+                  caos. Sin que todo pase por ti.
+                </p>
+              </div>
 
               {/* Pilares / chips, separados de la bio con un filete */}
               <div className="mt-12 md:mt-16 w-full max-w-3xl border-t border-neutral-800/80 pt-8">
@@ -434,8 +448,8 @@ export default function VslPage({ videoUrl = VSL_EMBED_URL }: VslPageProps = {})
           >
             {CTA_LABEL}
           </a>
-          <p className="mt-5 text-neutral-500 font-light text-xs md:text-[13px] leading-relaxed select-text">
-            Sesión exploratoria.
+          <p className="mt-3 max-w-[280px] text-center text-neutral-500 font-light text-xs leading-relaxed select-text">
+            Primera conversación exploratoria, sin compromiso.
           </p>
         </div>
       </section>

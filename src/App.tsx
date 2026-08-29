@@ -20,6 +20,8 @@ import CustomCursor from "./CustomCursor";
 import KleosMenu from "./components/KleosMenu";
 import ContactPage from "./pages/ContactPage";
 import VslPage from "./pages/VslPage";
+import AuditPage from "./pages/AuditPage";
+import { AUDIT_ROUTE } from "./lib/audit";
 
 import { ctaFinalItems } from "./data";
 
@@ -247,6 +249,7 @@ export default function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/contacto" element={<ContactPage />} />
       <Route path="/vsl" element={<VslPage />} />
+      <Route path={AUDIT_ROUTE} element={<AuditPage />} />
     </Routes>
   );
 }
