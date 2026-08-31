@@ -58,8 +58,8 @@ export default function FitSection() {
             Para quién es
           </p>
           <h2 className="font-serif text-4xl md:text-6xl font-light tracking-tight leading-[1.02] text-neutral-100 select-text">
-            Agency OS es para agencias{" "}
-            <span className="text-gold italic font-normal">que:</span>
+            Esto no es para {" "}
+            <span className="text-gold italic font-normal">todas las agencias.</span>
           </h2>
         </div>
 
@@ -70,7 +70,7 @@ export default function FitSection() {
 
             <div className="flex items-center gap-3 border-b border-white/5 pb-4 mb-6 select-none">
               <span className="font-mono text-[10px] text-gold font-bold tracking-widest uppercase">
-                Agency OS es para agencias que:
+                kleos Agency OS es para agencias que:
               </span>
             </div>
 

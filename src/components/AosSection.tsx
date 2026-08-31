@@ -124,7 +124,7 @@ export default function AosSection() {
               text-gold + font-normal). Unica desviacion de la receta que habia aca:
               max-w-2xl en vez de max-w-xl, porque son 3 frases y 197 caracteres. */}
           <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl font-light tracking-tight leading-[1.02] text-neutral-100 select-text">
-            Agency OS reemplaza el caos por un sistema.
+          Kleos Agency OS reemplaza el caos por un sistema eficiente.
           </h2>
           <p className="mt-5 max-w-2xl font-serif italic text-gold text-base md:text-lg font-normal leading-relaxed select-text">
             Procesos que se ejecutan sin que tengas que recordarlos, responsabilidades

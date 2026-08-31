@@ -189,10 +189,10 @@ export default function ServicesSection() {
           className="font-serif tracking-tight leading-[0.9] text-neutral-100 font-light max-w-none flex flex-col gap-2 sm:gap-3"
         >
           <span className="headline-line-1 block will-change-transform pb-2 text-[clamp(2.6rem,7vw,7rem)]">
-            No te lo contamos.
+            No solo te lo contamos,
           </span>
           <span className="headline-line-2 block text-gold italic font-normal will-change-transform pb-2 self-start sm:self-auto text-[clamp(2.6rem,7vw,7rem)]">
-            Te lo implementamos.
+            te lo implementamos
           </span>
         </h2>
 
@@ -228,13 +228,13 @@ export default function ServicesSection() {
               eso ademas se baja el aire de arriba (py-20 -> pt-12): se le devuelve
               a ellas lo que toma el titulo. */}
           <h3 className="mt-4 md:mt-5 font-serif italic text-gold text-base md:text-xl font-normal leading-snug select-text">
-            No empezamos por la herramienta. Primero la operación. Después la herramienta.
+            No empezamos por la herramienta. Primero el análisis, después la implementación.
           </h3>
           {/* Subtitulo: copy secundario del sitio (neutral-500 + font-light),
               una talla abajo de la que usa el parrafo del intro (text-xs md:text-sm)
               por el mismo motivo de altura de arriba. */}
           <p className="mt-2 md:mt-3 max-w-2xl text-neutral-500 font-light text-xs md:text-sm leading-relaxed select-text">
-            4 fases. Del diagnóstico a la adopción. Sin atajos.
+            4 fases. Del diagnóstico a la adopción. No hay atajos.
           </p>
         </div>
 

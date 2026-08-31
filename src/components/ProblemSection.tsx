@@ -85,7 +85,7 @@ export default function ProblemSection() {
         variant="deblur"
         eyebrow="El problema"
         bottomLeft="KLEOS CONSULTORÍA"
-        text="Tu equipo no llegó a su límite."
+        text="Tu equipo no se saturó."
         emphasis="Tu forma de operar sí."
         highlight="Porque no puedes escalar con procesos que viven en tu cabeza."
         dense
@@ -96,13 +96,25 @@ export default function ProblemSection() {
       {/* Introducción + síntomas */}
       <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 pb-20 md:pb-28 relative z-10">
         <div className="problem-intro max-w-3xl mx-auto text-center space-y-4 md:space-y-5 mb-14 md:mb-20 select-text">
-          {/* Titular de apertura de la sección. Subió de párrafo (text-base/lg,
+                    {/* Titular de apertura de la sección. Subió de párrafo (text-base/lg,
               font-light) a headline: escala grande + peso semibold.
-              Color neutro y fuente sans intactos — la jerarquía se logra solo
-              por tamaño y peso. font-semibold en vez de bold porque index.css
-              carga Inter en 300;400;500;600, así que 700 se sintetizaría mal. */}
-          <h3 className="text-neutral-300 font-semibold text-2xl sm:text-[1.75rem] md:text-4xl lg:text-[2.75rem] leading-[1.15] tracking-tight text-balance">
-            Tu gente trabaja bien. Pero tu forma de trabajar no escala.
+              2026-08-31: pasa a la tipografia de marca (font-serif = Playfair
+              Display, la misma de los h2 del sitio) y la clause entre rayas
+              queda en el dorado con la receta del acento dentro de un titulo
+              (font-serif + italic + text-gold + font-normal, la del "que:" de
+              FitSection y la linea 2 del titular de Services).
+              Los pesos no se inventan: index.css carga Playfair en 0,400 0,500
+              0,600 0,700 y 1,400 1,500. Por eso el titular sigue en
+              font-semibold (600 real) y el acento en italic font-normal (400
+              cursiva real): si se subiera el acento a 600 en cursiva, el
+              navegador lo sintetizaria.
+              Las dos rayas van DENTRO del <span> dorado: un acento partido en
+              cuatro cambios de color se lee cortado. Los {" "} explicitos son
+              para que el texto plano siga siendo el mismo byte a byte. */}
+          <h3 className="font-serif text-neutral-300 font-semibold text-2xl sm:text-[1.75rem] md:text-4xl lg:text-[2.75rem] leading-[1.15] tracking-tight text-balance">
+            ¿Tu personal no trabaja bien o es la estructura{" "}
+            <span className="text-gold italic font-normal">— o la falta de ella —</span>{" "}
+            la que los limita?
           </h3>
           <p className="text-neutral-500 font-light text-sm md:text-base leading-relaxed">
             ¿Cuántos de estos síntomas reconoces?
