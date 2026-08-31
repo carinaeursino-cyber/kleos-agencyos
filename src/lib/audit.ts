@@ -458,6 +458,23 @@ export interface Reading {
   close: string;
 }
 
+/** Titulos alternativos por dimension. Cada hallazgo se titula con la etiqueta de
+ *  su dimension y tres respuestas pueden caer en la misma dimension: sin variante,
+ *  el lector ve el mismo titulo dos veces y cree que la tarjeta esta duplicada.
+ *  Las variantes no son copy nuevo ni otro diagnostico: dicen lo mismo desde otro
+ *  angulo, en la misma caja (frase corta, sin punto final; el `uppercase` del
+ *  componente hace el resto). La regla que las gobierna es una sola y la verifica
+ *  la sonda del protocolo sobre los 1024 recorridos posibles: dentro de una misma
+ *  lectura NUNCA se repite un titulo. Por eso hay dos por dimension: con 3
+ *  hallazgos y 3 titulos disponibles por eje, repetir es imposible por conteo. */
+const AXIS_LABEL_VARIANTS: Record<Axis, string[]> = {
+  dependencia: ["Dependencia del fundador", "Decisiones que te esperan"],
+  procesos: ["Cómo se trabaja, sin escribir", "Criterio sin documentar"],
+  visibilidad: ["Búsqueda de información", "Falta de fuente única"],
+  consistencia: ["Calidad que varía por persona", "Estándar de terminado"],
+  capacidad: ["Sobrecarga silenciosa", "Límite del equipo"],
+};
+
 const axisLabel = (id: Axis) => AXES.find((a) => a.id === id)!.label;
 
 /** Presion total de una opcion: sirve para ordenar que hallazgos se muestran. */
@@ -475,6 +492,8 @@ export function buildReading(answers: Answers): Reading {
   const headline = level.code === "NIVEL IV" ? CALM_HEADLINE : HEADLINES[weakest.key];
 
   // Hallazgos: las 3 respuestas que mas presion sumaron, en su orden real.
+  // `usados` existe solo para que los titulos no se repitan dentro de la lectura.
+  const usados = new Set<string>();
   const findings = collect(answers)
     .slice()
     .sort((a, b) => weight(b.option) - weight(a.option))
@@ -484,7 +503,15 @@ export function buildReading(answers: Answers): Reading {
       const axis =
         (Object.entries(f.option.scores).sort((a, b) => (b[1] ?? 0) - (a[1] ?? 0))[0]?.[0] as Axis) ??
         "procesos";
-      return { axis, label: axisLabel(axis), text: f.option.finding, score: axes[axis] };
+      // El primer hallazgo de un eje se lleva el nombre del eje; los que siguen
+      // toman su variante libre. El `?? axisLabel(axis)` es inalcanzable por
+      // conteo (3 hallazgos vs 3 titulos por eje) y esta ahi solo para que el
+      // tipo sea total: si manana se muestran 4 hallazgos, ahi si habria que
+      // agrandar AXIS_LABEL_VARIANTS, no este fallback.
+      const pool = [axisLabel(axis), ...AXIS_LABEL_VARIANTS[axis]];
+      const label = pool.find((x) => !usados.has(x)) ?? axisLabel(axis);
+      usados.add(label);
+      return { axis, label, text: f.option.finding, score: axes[axis] };
     });
 
   const focus = Q5_FOCUS[answers.q5] ?? "base";

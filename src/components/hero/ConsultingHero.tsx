@@ -18,7 +18,6 @@ import LambdaCanvas from "../../LambdaCanvas";
 // Click en cualquier parte = saltar la intro.
 // ─────────────────────────────────────────────────────────────────
 
-
 const ACT_DURATIONS = {
   spiral: 3200,
   lambda: 4800,
@@ -27,11 +26,10 @@ const ACT_DURATIONS = {
 // ─────────────────────────────────────────────────────────────────
 // Copy final del hero (aprobado 2026-08-29). Dos CTAs:
 //
-//   CTA1 "Audita tu operacion en 3 min" -> el formulario de auditoria.
-//     La URL vive en AUDIT_FORM_URL aca abajo. Mientras sea null el boton
-//     cae en BOOKING_URL (la agenda de Cal.com) para que el hero nunca pueda
-//     quedar con un enlace roto: el mismo criterio que openHowItWorks() usa
-//     con /vsl.
+//   CTA1 "Audita tu operacion en 3 min" -> AUDIT_ROUTE (/auditoria), el
+//     protocolo interactivo KIP. La ruta esta definida una sola vez en
+//     src/lib/audit.ts y la consumen App.tsx (para montarla) y este boton,
+//     para que no puedan apuntar a sitios distintos.
 //   CTA2 "Ver el sistema en accion" -> openHowItWorks()
 //     (src/lib/howItWorks.ts), que hoy navega a la landing /vsl y, si esa
 //     pagina se diera de baja vaciando VSL_PAGE, vuelve a hacer scroll suave
@@ -124,7 +122,7 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
                 del ancho de la ventana. La segunda linea lleva el enfasis que
                 pide la marca: gold + italica, igual que antes. */}
             <span className="text-gold italic font-normal block mt-3 md:mt-4">
-              Porque de nada sirve facturar como las grandes si operas como un freelancer con empleados.
+              Porque de nada sirve facturar como las grandes agencias si operas como un freelancer con empleados.
             </span>
           </motion.h1>
 
@@ -135,21 +133,33 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
             className="w-24 md:w-32 h-[1px] bg-gold/20 my-7 md:my-9"
           />
 
-          {/* Subtitulo — dos oraciones: la objecion ("no necesitas mas
-              herramientas") y la respuesta con el nombre del sistema. Mismo
-              tamano que antes (16/18px) pero max-w-3xl (768px) en vez de
-              max-w-2xl: con 214 caracteres, a 672px eran 5 renglones y el
-              parrafo peleaba con el titular por la pantalla. text-balance
+          {/* Subtitulo — la objecion ("no hace falta adquirir mas
+              herramientas") respondida en dos frases. Mismo tamano que antes
+              (16/18px) y max-w-2xl md:max-w-3xl: con el nombre del sistema
+              fuera de este parrafo (bajo a su propia linea, abajo) son 143
+              caracteres, o sea 2 renglones a 768px en vez de 3. text-balance
               sigue evitando la palabra huerfana. */}
           <motion.p
             variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="text-neutral-300 font-light text-base md:text-lg leading-relaxed max-w-2xl md:max-w-3xl text-balance select-text"
           >
-            <p>
-  Y no, no es por falta de herramientas, es por falta de un sistema que ponga a trabajar a tu equipo sin que tengas que perseguirlos. 
-  <strong> Kleos Agency OS es la arquitectura operativa que te falta.</strong>
-</p>
+            Así que no es necesario adquirir más herramientas. Con un sistema que ponga a trabajar a tu equipo sin que tengas que perseguirlos, basta.
+          </motion.p>
+
+          {/* El nombre del sistema. Antes era la ultima oracion del parrafo de
+              arriba; a pedido baja y queda solo, como cierre del copy y apertura
+              de los botones. Tratamiento: la linea dorada suelta del sitio
+              (font-serif + italic + text-gold + font-normal, 16/18px), la misma
+              del remate de ProblemSection y de la linea de AosSection. Es UN
+              item nuevo del stagger (staggerChildren 0.14), o sea que entra 0.14s
+              despues del parrafo y los botones corren medio paso mas abajo. */}
+          <motion.p
+            variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-6 md:mt-7 font-serif italic text-gold text-base md:text-lg font-normal leading-relaxed max-w-2xl md:max-w-3xl text-balance select-text"
+          >
+            Kleos Agency OS es la arquitectura operativa que te falta.
           </motion.p>
 
           {/* CTAs — dos columnas desde sm (640px): boton + microcopy propio en
@@ -162,7 +172,7 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="mt-11 md:mt-14 grid w-full max-w-3xl grid-cols-1 items-start gap-x-6 gap-y-7 sm:grid-cols-2"
           >
-                        {/* CTA1 — dorado, el destino nuevo */}
+            {/* CTA1 — dorado, el destino nuevo */}
             <div className="flex flex-col items-center">
               {/* Navegacion interna (no <a target=_blank>): el protocolo es una
                   ruta del sitio, definida una sola vez en src/lib/audit.ts como
@@ -176,7 +186,7 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
                 Audita tu operación en 3 min
               </Link>
               <p className="mt-3 max-w-[280px] text-center text-neutral-500 font-light text-xs leading-relaxed select-text">
-                5 preguntas. Sin compromiso. Descubre exactamente dónde estás perdiendo margen y tiempo.
+                5 preguntas. Descubre exactamente dónde estás perdiendo margen y tiempo.
               </p>
             </div>
 
@@ -198,7 +208,7 @@ export default function ConsultingHero({ onEnterSite }: ConsultingHeroProps) {
                 </svg>
               </button>
               <p className="mt-3 max-w-[280px] text-center text-neutral-500 font-light text-xs leading-relaxed select-text">
-                Mira cómo funciona la arquitectura KLEOS. Sin compromiso.
+                Mira cómo funciona la arquitectura KLEOS.
               </p>
             </div>
           </motion.div>

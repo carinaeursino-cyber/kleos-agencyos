@@ -394,15 +394,15 @@ export default function VslPage({ videoUrl = VSL_EMBED_URL }: VslPageProps = {})
                   en el texto (la bio del home todavia dice "en ClickUp"; aca no). */}
               <div className="mx-auto max-w-2xl space-y-4">
                 <p className="text-base md:text-lg leading-relaxed text-neutral-300 font-light select-text">
-                  Durante más de <span className="text-gold font-medium">13 años</span>{" "}
-                  gestioné proyectos como PM y COO en agencias. Vi el mismo patrón una y
-                  otra vez: agencias que facturan bien pero operan mal. No por falta de
-                  talento, sino por falta de sistema.
+                  Soy Carina Ursino, Project Manager y especialista en operaciones
+                  digitales. Durante más de <span className="text-gold font-medium">13
+                  años</span> he gestionado operaciones en startups y agencias en
+                  crecimiento, trabajando directamente con equipos, procesos y sistemas.
                 </p>
                 <p className="text-base md:text-lg leading-relaxed text-neutral-300 font-light select-text">
-                  Diseñé Agency OS no para darte teoría, sino para implementar la
-                  arquitectura operativa que tu agencia necesita hoy. Sin dependencias. Sin
-                  caos. Sin que todo pase por ti.
+                  Agency OS nace de esa experiencia: no como una teoría sobre cómo
+                  debería funcionar una agencia, sino como una arquitectura operativa
+                  diseñada para implementarse en el día a día.
                 </p>
               </div>
 

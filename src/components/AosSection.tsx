@@ -1,15 +1,13 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Building2, Crown, Handshake, LayoutDashboard, Settings } from "lucide-react";
-import { aosLayers, controlDashboards } from "../data";
+import { Building2, Handshake, Settings } from "lucide-react";
+import { aosLayers } from "../data";
 import { openHowItWorks } from "../lib/howItWorks";
 
 // Íconos de marca por tarjeta, emparejados por id de data.ts. Línea fina
 // (strokeWidth 1.25) y el mismo text-gold sólido que tenían los números:
-// cambia el marcador, no la paleta. Se evitó PieChart en "Dashboard ejecutivo"
-// porque esa tarjeta ya muestra un gráfico de anillo y el ícono duplicaría
-// exactamente el mismo dibujo.
+// cambia el marcador, no la paleta.
 const layerIcons = {
   // El emparejado va por id, no por titulo: si manana cambia el copy, el icono
   // queda donde tiene que quedar.
@@ -18,47 +16,19 @@ const layerIcons = {
   "03": Handshake, // Gestion de Clientes — la relacion con el cliente
 };
 
-const dashboardIcons = {
-  "01": Crown, // Dashboard ejecutivo — vista de dirección
-  "02": LayoutDashboard, // Dashboard operativo — panel de control
-};
-
-// ── Capturas de los dashboards ──
-// Mismo mecanismo que AboutSection usa con la foto de Carina: se toman los
-// archivos de src/assets/images/ y se emparejan por substring del nombre.
-// Si el PNG todavia no esta, la tarjeta se renderiza sin imagen y el build
-// NO se rompe. Soltar el archivo en esa carpeta alcanza para que aparezca.
-const dashboardImages = import.meta.glob("../assets/images/*.{png,jpg,jpeg,webp}", {
-  eager: true,
-  import: "default",
-}) as Record<string, string>;
-
-// Captura y alt por tarjeta, emparejados por id de data.ts.
-// Vive aca y no en data.ts por el mismo motivo que la foto de Carina vive en
-// AboutSection: es cableado de un asset, no copy editable.
-const dashboardCaptures: Record<string, { file: string; alt: string }> = {
-  "01": {
-    file: "salud_de_proyecto",
-    alt: "Semáforo de Salud de Proyectos: gráfico de anillo con el estado de cada proyecto.",
-  },
-  "02": {
-    file: "volumen_activo_por_persona",
-    alt: "Volumen Activo por Persona: gráfico de barras con la carga de trabajo de cada integrante.",
-  },
-};
-
-const imageFor = (id: string) => {
-  const want = dashboardCaptures[id]?.file.toLowerCase();
-  if (!want) return undefined;
-  const hit = Object.entries(dashboardImages).find(([path]) =>
-    path.toLowerCase().includes(want)
-  );
-  return hit ? { src: hit[1], alt: dashboardCaptures[id].alt } : undefined;
-};
-
 // ─────────────────────────────────────────────────────────────────
 // AosSection — Agency Operating System
-// La arquitectura completa: capas, dashboards y onboarding.
+// Las 3 capas del sistema y el boton hacia el VSL.
+//
+// Esta seccion era la mas cargada del home: le pertenecian ademas los dos
+// Dashboards de control (con sus capturas) y, por fusion, el statement de
+// ValueSection. La poda del 2026-08-29 se llevo los dashboards: el bloque que
+// queda es header + grilla de capas + CTA, y por eso el <section> vuelve a
+// cerrar dentro del primer contenedor (antes habia un separador a ancho de
+// viewport y un segundo contenedor debajo).
+// El glob de `src/assets/images/` que alimentaba las capturas ya no esta:
+// era `eager`, o sea que metia los PNGs en el bundle aunque no se vieran.
+// La foto de Carina sigue llegando por AboutSection, que la importa sola.
 // ─────────────────────────────────────────────────────────────────
 
 export default function AosSection() {
@@ -103,7 +73,6 @@ export default function AosSection() {
 
       reveal(".aos-header > *", ".aos-header");
       reveal(".aos-layer-card", ".aos-layers-grid");
-      reveal(".aos-dashboard-card", ".aos-dashboards-grid");
 
       // El CTA no pasa por reveal(): venia de ValueSection con su propio tween
       // mas suave (y 24, start top 92%) porque es un boton suelto, no una grilla
@@ -158,8 +127,8 @@ export default function AosSection() {
             Agency OS reemplaza el caos por un sistema.
           </h2>
           <p className="mt-5 max-w-2xl font-serif italic text-gold text-base md:text-lg font-normal leading-relaxed select-text">
-            Procesos que se ejecutan sin que tengas que recordarlos. Responsabilidades
-            que no hay que perseguir. Todo en un solo lugar.
+            Procesos que se ejecutan sin que tengas que recordarlos, responsabilidades
+            que no hay que perseguir; todo en un solo lugar.
           </p>
         </div>
 
@@ -226,85 +195,6 @@ export default function AosSection() {
               <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
-        </div>
-      </div>
-
-      {/* ── Separador entre las 3 capas y los dashboards ──
-          Hijo directo del <section>, igual que los cortes reales del sitio:
-          border-t border-white/10 aplicado sobre un elemento que ocupa el
-          ancho de viewport, no el de max-w-6xl. Fuera del contenedor a
-          proposito, si no quedaria cortado a 1152px.
-          El aire lo dan los py-24 md:py-36 de los dos contenedores, que son
-          exactamente los que delimitan los demas cortes del home (ProblemSection,
-          ServicesSection, OnboardingSection, AutomationSection, FitSection,
-          AboutSection, FaqSection y los dos CtaBanner). No se citan numeros de
-          linea a proposito: se rompen con el primer corte de secciones. */}
-      <div className="border-t border-white/10" />
-
-      <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-12 py-24 md:py-36 relative z-10">
-        {/* Dashboards de control */}
-        <div className="mb-16 md:mb-24">
-          <div className="aos-header max-w-3xl mb-8 md:mb-12">
-            <p className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] text-gold uppercase mb-4 select-none">
-              Dashboards de control
-            </p>
-            <h3 className="font-serif text-2xl md:text-4xl font-light tracking-tight text-neutral-100 select-text">
-              Para que cada nivel{" "}
-              <span className="text-gold italic font-normal">vea lo que necesita.</span>
-            </h3>
-          </div>
-
-          <div className="aos-dashboards-grid grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            {controlDashboards.map((dash) => {
-              const capture = imageFor(dash.id);
-              const DashIcon = dashboardIcons[dash.id] ?? LayoutDashboard;
-              return (
-              <div
-                key={dash.id}
-                className="aos-dashboard-card relative bg-[#0B0B0C] border border-white/10 hover:border-gold/30 rounded-2xl p-6 md:p-9 transition-colors duration-300"
-              >
-                <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-6 select-none">
-                  <DashIcon className="h-4 w-4 shrink-0 text-gold" strokeWidth={1.25} aria-hidden="true" />
-                  <span className="flex gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gold/60" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-gold/30" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/10" />
-                  </span>
-                </div>
-
-                <h4 className="font-serif text-xl md:text-2xl font-light tracking-tight text-neutral-100 mb-5 select-text">
-                  {dash.title}
-                </h4>
-
-                {capture && (
-                  <figure className="mb-5">
-                    <img
-                      src={capture.src}
-                      alt={capture.alt}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-auto w-full rounded-lg border border-white/10"
-                    />
-                  </figure>
-                )}
-
-                <ul className="space-y-2.5">
-                  {dash.metrics.map((m, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center justify-between gap-4 border-b border-white/[0.04] pb-2.5"
-                    >
-                      <span className="text-neutral-300 text-[13px] md:text-sm font-light select-text">
-                        {m}
-                      </span>
-                      <span className="w-10 h-1 rounded-full bg-gold/20 shrink-0" />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              );
-            })}
-          </div>
         </div>
       </div>
     </section>

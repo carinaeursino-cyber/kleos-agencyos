@@ -10,11 +10,8 @@ import ProblemSection from "./components/ProblemSection";
 import StatsSection from "./components/StatsSection";
 import ServicesSection from "./components/ServicesSection";
 import AosSection from "./components/AosSection";
-import OnboardingSection from "./components/OnboardingSection";
-import AutomationSection from "./components/AutomationSection";
 import FitSection from "./components/FitSection";
 import AboutSection from "./components/AboutSection";
-import CtaBanner from "./components/CtaBanner";
 import FaqSection from "./components/FaqSection";
 import CustomCursor from "./CustomCursor";
 import KleosMenu from "./components/KleosMenu";
@@ -22,8 +19,6 @@ import ContactPage from "./pages/ContactPage";
 import VslPage from "./pages/VslPage";
 import AuditPage from "./pages/AuditPage";
 import { AUDIT_ROUTE } from "./lib/audit";
-
-import { ctaFinalItems } from "./data";
 
 // ── Navegación lateral (scroll spy) ──
 // El orden de esta lista tiene que ser el orden real del scroll: el spy activa el
@@ -171,51 +166,53 @@ function HomePage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <main className="lg:pl-24 lg:pr-24">
-            {/* Orden del home: primero el dolor, despues la solucion con su prueba
-                visual (las 3 capas + los dashboards, que viven en AosSection, despues
-                onboarding y automatizacion) y recien ahi el proceso de
-                implementacion. ValueSection ya no existe como franja: su statement y
-                su boton fueron a parar dentro de AosSection. Entre el problema y la
-                solucion entra StatsSection, la franja de contadores: no es un capitulo del
-                menu ni del rail lateral, es una banda. */}
+            {/* Orden del home: el dolor primero (ProblemSection), despues la
+                prueba de credibilidad (StatsSection, la banda de contadores, que
+                no es capitulo del menu ni del rail lateral: es una banda), despues
+                la solucion con las 3 capas del sistema (AosSection, que lleva adentro
+                el statement que vivia en ValueSection y el boton "Ver como funciona"
+                que enlaza a /vsl), recien ahi el proceso de implementacion
+                (ServicesSection, auto-pinned), Para Quien Es, Sobre Carina, la linea
+                puente y el FAQ.
+
+                Poda 2026-08-29, a pedido: salieron los dos Dashboards de control
+                (vivian adentro de AosSection), OnboardingSection, AutomationSection y
+                los dos CtaBanner (Revision operativa y Escalar con claridad). El
+                reemplazo de los banners es la linea puente de abajo: copy propio, sin
+                caja y sin boton. Los RAIL_ITEMS de arriba no se tocaron: los 3 ids
+                (problem / system / services) siguen existiendo y siguen en el mismo
+                orden de scroll, asi que el numero que se lee en el costado y el spy
+                quedan bien solos. */}
             <ProblemSection />
             <StatsSection />
             <AosSection />
-            <OnboardingSection />
-            <AutomationSection />
             <ServicesSection />
             <FitSection />
             <AboutSection />
 
-            {/* CTA intermedio. La etiqueta del boton es a proposito la misma que
-                CORE_LABEL en components/audit/AuditReading.tsx: las dos puertas
-                de agenda del sitio tienen que decir lo mismo. Los comentarios JSX
-                van AFUERA de la lista de atributos; adentro rompen el parseo. */}
-            <CtaBanner
-              id="cta-revision"
-              eyebrow="Revisión operativa"
-              title="Si todo depende de ti, todavía no tienes"
-              highlight="una operación escalable."
-              intro="Analizamos tu operación actual para detectar las fugas de tiempo y margen. Te damos un veredicto claro y un plan de acción."
-              buttonLabel="Agenda tu sesión exploratoria"
-              smallText="Una conversación directa sobre tu operación."
-              action="contact"
-            />
+            {/* Linea puente entre "Sobre Carina" y el FAQ. Es la frase con la que
+                abria el CtaBanner de Revision operativa, ahora sin caja, sin glow y
+                sin boton. Reusa tal cual el tratamiento del <h3> de ese banner
+                (font-serif + font-light + text-neutral-100, con el cierre en dorado
+                cursiva) y su medida max-w-5xl mx-auto text-center; y el py-20
+                md:py-28 del contenedor externo del banner, para que la franja ocupe
+                el mismo lugar vertical que ocupaba.
+                Dos diferencias, las dos buscadas: (a) el banner forzaba un <br> en
+                desktop entre las dos mitades y aca la frase corre como un solo texto;
+                (b) se perdio el padding interno de la caja (p-10 md:p-16 lg:p-20),
+                que era aire alrededor del borde, no alrededor del copy. Queda:
+                About 144 + puente 112 = 256px hasta la linea (antes 337); puente 112
+                + hairline + FAQ 144 = 256px hasta el header del FAQ.
+                Sin border-top en el puente a proposito: FaqSection ya trae el suyo y
+                dos hairlines separados ~112px se leen como un error de maquetacion. */}
+            <div className="max-w-5xl mx-auto px-5 sm:px-6 md:px-12 py-20 md:py-28 text-center">
+              <h3 className="font-serif text-2xl md:text-4xl lg:text-5xl font-light tracking-tight leading-tight text-neutral-100 select-text">
+                Si todo depende de ti, todavía no tienes{" "}
+                <span className="text-gold italic font-normal">una operación escalable.</span>
+              </h3>
+            </div>
 
             <FaqSection />
-
-            {/* CTA final */}
-            <CtaBanner
-              id="cta-final"
-              eyebrow="Escalar con claridad"
-              title="Tu agencia ya creció. Ahora necesita"
-              highlight="una operación a la altura."
-              intro="No necesitas más urgencias, más reuniones ni más información perdida en chats. Necesitas saber:"
-              items={ctaFinalItems}
-              buttonLabel="Agenda tu sesión exploratoria"
-              action="contact"
-              footerText="Agency OS · Orden. Claridad. Escala."
-            />
           </main>
 
           {/* FOOTER */}
@@ -237,16 +234,23 @@ function HomePage() {
               <p className="font-serif text-lg sm:text-xl md:text-2xl text-neutral-200 font-light tracking-wide mb-6 sm:mb-8 max-w-lg leading-relaxed">
                 El caos no es el precio del éxito. Es el costo de no tener un sistema.
               </p>
+              {/* La etiqueta es a proposito identica a CORE_LABEL en
+                  components/audit/AuditReading.tsx: las puertas de agenda del sitio
+                  tienen que decir lo mismo, y ahora que los CtaBanner no estan, esta
+                  es la unica puerta de /contacto de la home. El boton sticky del
+                  header (KleosMenu) enlaza directo a BOOKING_URL: otra decision
+                  propia, no se toca. Ninguna de las dos declara duracion. */}
               <Link
                 to="/contacto"
                 className="cursor-hover inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-3.5 border border-gold/30 hover:border-gold hover:bg-gold/5 text-gold text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.2em] sm:tracking-[0.25em] rounded-full transition-all duration-300"
               >
                 Agenda tu sesión exploratoria
               </Link>
-              {/* Microcopy debajo del boton: la misma clase que smallText en
-                  CtaBanner, para que las dos puertas de agenda del sitio se vean
-                  igual. El <p> del copyright conserva su mt-12/md:mt-16, asi que
-                  el bloque Footer crece ~68px y nada mas se mueve. */}
+              {/* Microcopy debajo del boton: la misma clase con la que CtaBanner
+                  cerraba sus banners con smallText (hoy ya no hay ninguno montado),
+                  para que el pie conserve ese tratamiento. El <p> del copyright
+                  conserva su mt-12/md:mt-16, asi que el bloque Footer crece ~68px y
+                  nada mas se mueve. */}
               <p className="mt-5 text-neutral-500 font-light text-xs md:text-[13px] leading-relaxed select-text">
                 Una conversación directa sobre tu operación.
               </p>

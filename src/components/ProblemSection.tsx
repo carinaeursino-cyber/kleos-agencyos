@@ -154,9 +154,9 @@ export default function ProblemSection() {
               ("No te preocupes"), asi que las comillas se sacaron: envolver en
               comillas algo que le decis al lector lo convierte en refran. */}
           <p className="font-serif italic text-gold text-base md:text-lg font-normal leading-snug select-text">
-            No te preocupes. El desorden es solo un síntoma natural de tu éxito. Tu
-            agencia creció más rápido que tus procesos y ahora solo toca implementar la
-            estructura para que puedas escalar al siguiente nivel.
+            No te preocupes. El desorden es solo una consecuencia normal de tu éxito y
+            ahora solo queda implementar la estructura para que puedas llegar al
+            siguiente nivel.
           </p>
         </div>
       </div>

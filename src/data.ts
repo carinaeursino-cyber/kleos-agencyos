@@ -239,19 +239,19 @@ export const automations: AutomationItem[] = [
 // ── Cómo trabajamos ──
 // ── Para quién es / no es ──
 export const fitYes: FitItem[] = [
-  { id: "01", text: "Tienes clientes activos y un equipo, interno o externo." },
-  { id: "02", text: "Tu agencia creció y la operación quedó atrás." },
-  { id: "03", text: "Tú concentras demasiadas decisiones." },
-  { id: "04", text: "Quieres dejar de apagar incendios y empezar a prevenirlos." },
-  { id: "05", text: "Buscas implementar, no solo recibir consejos." },
-  { id: "06", text: "Quieres que tu equipo sepa qué hacer sin que se lo digas." },
+  { id: "01", text: "Tienen clientes activos y un equipo, interno o externo." },
+  { id: "02", text: "Crecieron rápido y la operación quedó atrás." },
+  { id: "03", text: "Concentran demasiadas decisiones en una sola persona." },
+  { id: "04", text: "Buscan dejar de apagar incendios y empezar a prevenirlos." },
+  { id: "05", text: "Quieren implementar un sistema, no solo recibir consejos." },
+  { id: "06", text: "Necesitan que el equipo sepa qué hacer sin que nadie se lo diga." },
 ];
 
 export const fitNo: FitItem[] = [
-  { id: "01", text: "Buscas una plantilla sin adaptar a tu agencia." },
-  { id: "02", text: "No quieres documentar tu forma de trabajar." },
-  { id: "03", text: "Crees que el caos es parte de la creatividad." },
-  { id: "04", text: "Todavía no tienes un servicio definido." },
+  { id: "01", text: "Buscan una plantilla genérica sin adaptar a su operación." },
+  { id: "02", text: "No quieren documentar su forma de trabajar." },
+  { id: "03", text: "Creen que el caos es parte de la creatividad." },
+  { id: "04", text: "Todavía no tienen un servicio definido." },
 ];
 
 // ── Sobre Carina ──

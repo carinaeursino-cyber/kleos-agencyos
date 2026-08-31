@@ -154,10 +154,9 @@ export default function AboutSection() {
                   de la facturación. No era falta de talento. Era falta de sistema.
                 </p>
                 <p className="text-neutral-300 font-light text-base md:text-lg leading-relaxed select-text">
-                  Creé Agency OS para cerrar esa brecha. Sin teoría. Sin promesas
-                  vacías. Solo implementación pura de una arquitectura operativa que
-                  te permita delegar sin miedo, escalar sin caos y recuperar el
-                  control de tu agencia.
+                  Creé Agency OS para cerrar esa brecha. Solo implementación pura de
+                  una arquitectura operativa que te permita delegar sin miedo, escalar
+                  sin caos y recuperar el control de tu agencia.
                 </p>
               </div>
 
